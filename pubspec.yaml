@@ -1,0 +1,95 @@
+name: shopmobile
+description: A new Flutter project.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.16.2 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  easy_localization:
+
+  cupertino_icons: ^1.0.2
+  shared_preferences:
+  get_it: #Service Locator
+  provider: #State Management
+  dio: #Api Calls
+  google_fonts: ^2.1.0 # Google Fonts
+  #  animated_bottom_navigation_bar: # Bottom Navigation Bar
+  flutter_screenutil: # Responsive Design
+  flutter_svg: # Svg Support
+  introduction_screen: ^3.0.2
+  intl_phone_number_input: ^0.7.0+2
+  pin_code_fields: ^7.4.0
+  badges: ^2.0.3
+  path_provider:
+  flutter_secure_storage: ^6.0.0
+  http:
+  flutter_slidable:
+  shimmer: ^2.0.0
+  cached_network_image:
+  shared_value:
+  carousel_slider: ^4.1.1
+  image_picker:
+  smooth_page_indicator: ^1.0.0+2
+  rxdart: ^0.27.5
+  dotted_border:
+  geolocator:
+  url_launcher: ^6.1.5
+  rename: ^2.0.1
+  lottie: ^1.4.2
+  connectivity_plus: ^2.3.7
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_launcher_icons: "^0.10.0"
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/logo.png"
+  flutter_lints: ^1.0.0
+
+flutter:
+
+  uses-material-design: true
+  assets:
+
+    - assets/animations/
+    - assets/fonts/
+    - assets/icons/
+    - assets/icons/Light/
+    - assets/icons/basic/
+    - assets/icons/Bold/
+    - assets/icons/Colored/
+    - assets/images/
+    - assets/translations/
+
+
+
+  fonts:
+    - family: OpenSans
+      fonts:
+        #        - asset: assets/fonts/OpenSans-Black.ttf
+        #          weight: 900
+        - asset: assets/fonts/OpenSans-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/OpenSans-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/OpenSans-SemiBold.ttf
+          weight: 600
+        #        - asset: assets/fonts/OpenSans-Medium.ttf
+        #          weight: 500
+        - asset: assets/fonts/OpenSans-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/OpenSans-Light.ttf
+          weight: 300
+#        - asset: assets/fonts/OpenSans-ExtraLight.ttf
+#          weight: 200
