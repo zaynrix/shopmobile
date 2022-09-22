@@ -28,21 +28,25 @@ import 'package:shopmobile/ui/features/favorite/favoriteProvider.dart';
 final sl = GetIt.instance;
 
 Future<void> init() async {
-  Dio client = Dio(BaseOptions(
-    receiveDataWhenStatusError: true,
-    connectTimeout: 50000,
-    receiveTimeout: 30000,
-    responseType: ResponseType.json,
-    baseUrl: '${ApiConstant.url}',
-    contentType: 'application/json',
-  ));
-
-  client.interceptors.add(RetryOnConnectionChangeInterceptor(
-    requestRetrier: DioConnectivityRequestRetrier(
-      dio: client,
-      connectivity: Connectivity(),
+  Dio client = Dio(
+    BaseOptions(
+      receiveDataWhenStatusError: true,
+      connectTimeout: 50000,
+      receiveTimeout: 30000,
+      responseType: ResponseType.json,
+      baseUrl: '${ApiConstant.url}',
+      contentType: 'application/json',
     ),
-  ));
+  );
+
+  client.interceptors.add(
+    RetryOnConnectionChangeInterceptor(
+      requestRetrier: DioConnectivityRequestRetrier(
+        dio: client,
+        connectivity: Connectivity(),
+      ),
+    ),
+  );
   sl.registerLazySingleton<HttpAuth>(() => HttpAuth(client: sl()));
   sl.registerLazySingleton<HomeRepo>(() => HomeRepo(client: sl()));
   sl.registerLazySingleton<FavouriteRepo>(() => FavouriteRepo(client: sl()));

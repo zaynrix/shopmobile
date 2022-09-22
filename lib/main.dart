@@ -9,13 +9,14 @@ import 'package:shopmobile/resources/theme_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shopmobile/ui/features/home/homeProvider.dart';
-
 void main() async {
+
+
+  // print("This is $endpoints");
   WidgetsFlutterBinding.ensureInitialized();
 
   await EasyLocalization.ensureInitialized();
   await init();
-  await EasyLocalization.ensureInitialized();
   await ScreenUtil.ensureScreenSize();
 
   SystemChrome.setSystemUIOverlayStyle(

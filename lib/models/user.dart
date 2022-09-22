@@ -29,8 +29,8 @@ class User {
   String? email;
   String? phone;
   String? image;
-  int? points;
-  int? credit;
+  num? points;
+  num? credit;
   String? token;
   String? password;
   String? introPhone;

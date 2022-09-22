@@ -13,7 +13,6 @@ dependencies:
     sdk: flutter
 
   easy_localization:
-
   cupertino_icons: ^1.0.2
   shared_preferences:
   get_it: #Service Locator

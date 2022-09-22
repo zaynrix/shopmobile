@@ -21,6 +21,7 @@ class HomeRepo {
     // print("This is ${token}");
 
     Response response = await client!.get('${ApiConstant.home}',
+
         options: Options(
           headers: <String, String>{
             "lang": "${sl<SharedLocal>().getLanguage}",
@@ -52,6 +53,7 @@ class HomeRepo {
     print("This is ${token}");
 
     Response response = await client!.get('${ApiConstant.products}/$ProductId',
+
         options: Options(
           headers: <String, String>{ "lang": "${sl<SharedLocal>().getLanguage}", "Authorization": "$token"},
         ));
@@ -69,8 +71,10 @@ class HomeRepo {
     print("This is ${token}");
 
     Response response = await client!.post(
+
       '${ApiConstant.search}',
       data: {"text": "$tex"},
+
       options: Options(
         headers: <String, String>{ "lang": "${sl<SharedLocal>().getLanguage}", "Authorization": "$token"},
       ),

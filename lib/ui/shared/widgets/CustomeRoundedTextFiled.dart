@@ -53,7 +53,7 @@ class CustomTextFiled extends StatelessWidget {
           suffixIcon: suffixIcon,
           prefixIcon: prefixIcon,
           filled: true,
-          // errorStyle: const TextStyle(height: 0, color: Colors.transparent),
+          errorStyle: const TextStyle(height: 0, color: Colors.transparent),
           hintStyle: getRegularStyle(
               color: ColorManager.lightGrey, fontSize: FontSize.s16.sp),
           fillColor: Colors.white70,

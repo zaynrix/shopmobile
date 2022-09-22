@@ -2,24 +2,26 @@ import 'package:flutter/material.dart';
 
 class NavigationService {
   final GlobalKey<ScaffoldMessengerState> snackbarKey =
-  GlobalKey<ScaffoldMessengerState>();
-  // final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+      GlobalKey<ScaffoldMessengerState>();
 
   final GlobalKey<NavigatorState> navigatorKey =
-  new GlobalKey<NavigatorState>();
+      new GlobalKey<NavigatorState>();
 
   navigateTo(String routeName, {Object? args}) {
-    return navigatorKey.currentState!.pushNamed(routeName, arguments: args,);
-  }
-//123123123
-  navigateToAndRemove(String routeName) {
-    return navigatorKey.currentState!.pushNamedAndRemoveUntil(
+    return navigatorKey.currentState!.pushNamed(
       routeName,
-          (Route<dynamic> route) => false,
+      arguments: args,
     );
   }
 
-  pop(){
-    navigatorKey.currentState!.pop();
+  navigateToAndRemove(String routeName) {
+    return navigatorKey.currentState!.pushNamedAndRemoveUntil(
+      routeName,
+      (Route<dynamic> route) => false,
+    );
+  }
+
+  pop() {
+    return navigatorKey.currentState!.pop();
   }
 }
