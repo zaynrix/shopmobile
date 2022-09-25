@@ -33,6 +33,12 @@ https://www.figma.com/file/pgZhGkpSWwrkUqMoEYfPq0/Mobile-shop-App-UI-Kit?node-id
 <img src="screenShots/Thumbnails.png"  />
 
   </p>
+
+
+<p align="center">
+<img src="screenShots/prev.png"  />
+
+  </p>
 <p align="center">
 <img src="screenShots/1.png" width="230" />
 <div>
