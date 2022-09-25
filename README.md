@@ -2,6 +2,17 @@
 
 https://www.figma.com/file/pgZhGkpSWwrkUqMoEYfPq0/Mobile-shop-App-UI-Kit?node-id=214%3A2546
 
+
++ PROVIDER,
++ GET_IT,
++ RX_DART,
++ DIO,
++ INTERCEPTORS,
++ OFFLINE,
+
++ Turning adapter on and off,
+
++ Opening settings,
 <p align="center">
 <img src="screenShots/1.png" width="230" />
 <div>
