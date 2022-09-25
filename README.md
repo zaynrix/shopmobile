@@ -3,15 +3,15 @@
 https://www.figma.com/file/pgZhGkpSWwrkUqMoEYfPq0/Mobile-shop-App-UI-Kit?node-id=214%3A2546
 
 <p align="center">
-<img src="screen_shots/1-splach_screen.jpeg" width="230" />
+<img src="screenShots/1.png" width="230" />
 <div>
   </p>
 <p align="center">
-  <img src="screen_shots/2-onBoarding_screen.jpeg" width="230" />
+  <img src="screenShots/2.png" width="230" />
   ⚫
-  <img src="screen_shots/3-onBoarding_screen.jpeg" width="230" /> 
+  <img src="screenShots/3.png" width="230" /> 
   ⚫
-  <img src="screen_shots/4-onBoarding_screen.jpeg" width="230" />
+  <img src="screenShots/4.png" width="230" />
   </p>
 
 </p>
