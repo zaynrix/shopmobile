@@ -81,12 +81,30 @@ class RouterX {
         return MaterialPageRoute(
           builder: (context) => AboutUsScreen(),
         );
-
+      case pagesEnd:
+        return MaterialPageRoute(
+          builder: (_) => MultiProvider(
+            providers: [
+              ChangeNotifierProvider(
+                create: (context) => HomeProvider(),
+              ),
+              ChangeNotifierProvider(
+                create: (context) => FavouriteProvider(),
+                // child:  PagesTestWidget(currentTab: settings.arguments as int),
+              ),
+            ],
+            child: PagesTestWidget(currentTab: settings.arguments as int),
+          ),
+        );
+      // return MaterialPageRoute(
+      //   builder: (context) =>
+      //       PagesTestWidget(currentTab: settings.arguments as int),
+      // );
       case login:
         return MaterialPageRoute(
           builder: (_) => ChangeNotifierProvider(
             create: (context) => AuthProvider(),
-            child:  LoginScreen(),
+            child: LoginScreen(),
           ),
         );
 

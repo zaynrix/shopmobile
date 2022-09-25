@@ -27,3 +27,4 @@ const String aboutus = '/aboutus';
 const String contactus = '/contactus';
 const String terms = '/terms';
 const String helpCenter = '/helpCenter';
+const String pagesEnd = '/pagesEnd';

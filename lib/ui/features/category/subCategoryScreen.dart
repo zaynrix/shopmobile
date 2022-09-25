@@ -23,52 +23,52 @@ class SubCategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OfflineBuilder(
-      connectivityBuilder: (
-          BuildContext context,
-          ConnectivityResult connectivity,
-          Widget child,
-          ) {
-        if (connectivity == ConnectivityResult.none) {
-          return NetworkDisconnected(onPress: (){
-            // sl<HomeProvider>().getHomeProvider();
-          });
-        } else {
-          return child;
-        }
-      },
-      child: Consumer2<CategoryProvider, HomeProvider>(
-        builder: (context, value, homeProvider, child) => Scaffold(
-          appBar: CustomAppBar(
-            title: "${value.title}",
-            actions: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25.w),
-                child: Badge(
-                    badgeColor: ColorManager.starYellow,
-                    position: BadgePosition.topEnd(top: 0, end: -10),
-                    badgeContent: FittedBox(
-                        child: Text(
-                      "${sl<CartProvider>().cartLength}",
-                      style: TextStyle(color: ColorManager.white),
-                    )),
-                    child: GestureDetector(
-                      onTap: () {
-                        sl<SharedLocal>().getUser()!.token != ""
-                            ? sl<NavigationService>().navigateTo(cart)
-                            : sl<NavigationService>().navigateTo(login);
-                      },
-                      child: CustomSvgAssets(
-                        path: IconAssets.cart,
-                        color: ColorManager.black,
-                      ),
-                    )),
-              )
-            ],
-          ),
-          extendBody: true,
-          backgroundColor: ColorManager.backgroundColor,
-          body: RefreshIndicator(
+    return Consumer2<CategoryProvider, HomeProvider>(
+      builder: (context, value, homeProvider, child) => Scaffold(
+        appBar: CustomAppBar(
+          title: "${value.title}",
+          actions: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 25.w),
+              child: Badge(
+                  badgeColor: ColorManager.starYellow,
+                  position: BadgePosition.topEnd(top: 0, end: -10),
+                  badgeContent: FittedBox(
+                      child: Text(
+                    "${sl<CartProvider>().cartLength}",
+                    style: TextStyle(color: ColorManager.white),
+                  )),
+                  child: GestureDetector(
+                    onTap: () {
+                      sl<SharedLocal>().getUser()!.token != ""
+                          ? sl<NavigationService>().navigateTo(cart)
+                          : sl<NavigationService>().navigateTo(login);
+                    },
+                    child: CustomSvgAssets(
+                      path: IconAssets.cart,
+                      color: ColorManager.black,
+                    ),
+                  )),
+            )
+          ],
+        ),
+        extendBody: true,
+        backgroundColor: ColorManager.backgroundColor,
+        body: OfflineBuilder(
+          connectivityBuilder: (
+              BuildContext context,
+              ConnectivityResult connectivity,
+              Widget child,
+              ) {
+            if (connectivity == ConnectivityResult.none) {
+              return NetworkDisconnected(onPress: (){
+                // sl<HomeProvider>().getHomeProvider();
+              });
+            } else {
+              return child;
+            }
+          },
+          child: RefreshIndicator(
             color: ColorManager.primaryGreen,
             onRefresh: () async {
               // await value.refreshHome();

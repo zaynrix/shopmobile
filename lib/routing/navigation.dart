@@ -14,10 +14,11 @@ class NavigationService {
     );
   }
 
-  navigateToAndRemove(String routeName) {
+  navigateToAndRemove(String routeName,{Object? arg}) {
     return navigatorKey.currentState!.pushNamedAndRemoveUntil(
       routeName,
       (Route<dynamic> route) => false,
+      arguments: arg
     );
   }
 

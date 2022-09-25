@@ -5,6 +5,8 @@ import 'package:shopmobile/di.dart';
 import 'package:shopmobile/models/paymentMethodModel.dart';
 import 'package:shopmobile/resources/assets_manager.dart';
 import 'package:shopmobile/resources/color_manager.dart';
+import 'package:shopmobile/routing/navigation.dart';
+import 'package:shopmobile/routing/routes.dart';
 import 'package:shopmobile/ui/features/Profile/profileProvider.dart';
 import 'package:shopmobile/ui/shared/widgets/CustomAppBar.dart';
 import 'package:shopmobile/ui/shared/widgets/CustomCTAButton.dart';
@@ -20,7 +22,6 @@ class PaymentMethodScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ProfileProvider>(
       builder: (context, value, child) => Scaffold(
-        key: value.productDetailsScaffoldKey,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -35,6 +36,12 @@ class PaymentMethodScreen extends StatelessWidget {
         ),
         backgroundColor: ColorManager.backgroundColor2,
         appBar: CustomAppBar(
+          // leading: IconButton(
+          //   onPressed: (){
+          //     // sl<NavigationService>().navigateToAndRemove(pagesEnd, arg: 0);
+          //   },
+          //   icon: Icon(Icons.arrow_back_sharp),
+          // ),
           backgroundColor: ColorManager.backgroundColor2,
           title: "PaymentMethod",
         ),

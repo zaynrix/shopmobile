@@ -46,10 +46,11 @@ class MyPurchessScreen extends StatelessWidget {
                 height: 30.h,
               ),
               CustomeCTAButton(
+
                 trigger: false,
-                primary: ColorManager.primaryGreen.withOpacity(0.04),
+                primary: ColorManager.primaryGreen.withOpacity(1),
                 title: "OrderNow",
-                textColor: ColorManager.primaryGreen,
+                textColor: ColorManager.white,
                 onPressed: () {
                   sl<NavigationService>().navigateToAndRemove(home);
                 },
