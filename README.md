@@ -2,6 +2,7 @@
 
 https://www.figma.com/file/pgZhGkpSWwrkUqMoEYfPq0/Mobile-shop-App-UI-Kit?node-id=214%3A2546
 
+## Features
 
 + PROVIDER,
 + GET_IT,
@@ -10,9 +11,24 @@ https://www.figma.com/file/pgZhGkpSWwrkUqMoEYfPq0/Mobile-shop-App-UI-Kit?node-id
 + INTERCEPTORS,
 + OFFLINE,
 
-+ Turning adapter on and off,
++ ONBOARDING,
++ REGISTRATION,
++ HOME,
++ SEARCH,
++ NOFIFICATIONS,
++ CATEGOREY,
++ CART,
++ EXEPLOR,
++ FAVOURITE,
++ PROFILE,
++ CHANGE PASSWORD,
++ SETTING,
++ LANGUAGES,
++ MY PURCHES,
++ -TRAKING,
 
-+ Opening settings,
+
+
 <p align="center">
 <img src="screenShots/1.png" width="230" />
 <div>
