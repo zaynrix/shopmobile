@@ -43,7 +43,7 @@ sl<HomeProvider>().getHomeProvider();
           .toList();
       notifyListeners();
     } else {
-      print("There is no data");
+      //("There is no data");
     }
   }
 

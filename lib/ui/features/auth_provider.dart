@@ -61,7 +61,7 @@ class AuthProvider extends ChangeNotifier {
       // loginRepo => Login Request
       LoginResponse res = await sl<HttpAuth>().loginRepo(
           email: emailController.text, password: passwordController.text);
-      print("This is $res");
+      //("This is $res");
 
       if (res.status == true && res.user != null) {
 
@@ -91,7 +91,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> SignupProvider() async {
-    print(fullname.text);
+    //(fullname.text);
     User user = User.SignUp(
         name: fullname.text,
         introPhone: selectedLocation,
@@ -124,8 +124,8 @@ class AuthProvider extends ChangeNotifier {
       loading = true;
       notifyListeners();
       var tempo = sl<SharedLocal>().getSignUpTempo();
-      print(!tempo!.contains("@"));
-      LoginResponse res = tempo.contains("@")
+      // //(!tempo!.contains("@"));
+      LoginResponse res = tempo!.contains("@")
           ? await sl<HttpAuth>()
               .confirmCodeRepo(email: tempo, otp: pinController.text)
           : await sl<HttpAuth>().sendOTP(phone: tempo, otp: pinController.text);
@@ -177,7 +177,7 @@ class AuthProvider extends ChangeNotifier {
 
       LoginResponse res =
           await sl<HttpAuth>().forgetRepo(email: emailController.text);
-      print("This is $res");
+      //("This is $res");
 
       if (res.status == true) {
         loading = false;
@@ -201,7 +201,7 @@ class AuthProvider extends ChangeNotifier {
   Future<void> logoutProvider() async {
     LogoutModel res = await sl<HttpAuth>().logout();
 
-    // print("This is $res");
+    // //("This is $res");
     //yahya123456@gmail.com 123456    6
     //yahya12345612@gmail.com phone-> 1222222  pas -> yahya12345612     5
     //yahya12345612 123456

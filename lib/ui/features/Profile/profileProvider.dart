@@ -152,13 +152,13 @@ class ProfileProvider extends ChangeNotifier {
 
   changeRadio(value) {
     val = value;
-    print(val);
+    (val);
     notifyListeners();
   }
 
   changeRadio2(value) {
     languageval = value;
-    print(languageval);
+    (languageval);
     notifyListeners();
   }
 
@@ -171,7 +171,7 @@ class ProfileProvider extends ChangeNotifier {
       notifyListeners();
     }
     addressValue = value;
-    print(addressValue);
+    (addressValue);
     notifyListeners();
   }
 
@@ -193,29 +193,29 @@ class ProfileProvider extends ChangeNotifier {
     lat = position.latitude;
     notifyListeners();
 
-    print("This is long :$long - lat:$lat");
+    // ("This is long :$long - lat:$lat");
   }
 
   void getAddressProvider() async {
-    print("Added Data");
+    ("Added Data");
     AddressModel response = await sl<ProfileRepo>().getAddress();
-    print("This is response ${response.hashCode}");
+    ("This is response ${response.hashCode}");
 
-    print(response.status);
+    (response.status);
     if (response.status == true) {
       address = response.data!.addres!;
       notifyListeners();
     } else {
-      print("There is no data");
+      ("There is no data");
     }
   }
 
   void getAboutUsProvider() async {
-    print("Added Data");
+    // ("Added Data");
     AboutUs response = await sl<ProfileRepo>().getAboutUs();
-    print("This is response ${response.hashCode}");
+    // ("This is response ${response.hashCode}");
 
-    print(response.status);
+    (response.status);
     if (response.status == true) {
       if (aboutus != null) {
         aboutus = null;
@@ -224,39 +224,39 @@ class ProfileProvider extends ChangeNotifier {
       aboutus = response.data;
       notifyListeners();
     } else {
-      print("There is no data");
+      // ("There is no data");
     }
   }
 
   void getFAQProvider() async {
-    print("Added Data");
+    // ("Added Data");
     FAQModel response = await sl<ProfileRepo>().getFAQ();
-    print("This is response ${response.hashCode}");
+    // ("This is response ${response.hashCode}");
 
-    print(response.status);
+    (response.status);
     if (response.status == true) {
       faq = response.data!.faqs!;
       notifyListeners();
     } else {
-      print("There is no data");
+      // ("There is no data");
     }
   }
 
   void getContactUsProvider() async {
-    print("Added Data");
+    ("Added Data");
     ContactUs response = await sl<ProfileRepo>().getContactUs();
-    print("This is response ${response.hashCode}");
+    ("This is response ${response.hashCode}");
 
-    print(response.status);
+    (response.status);
     if (response.status == true) {
       contactUsData = response.data!.contactUsData!;
-      print(contactUsData);
+      (contactUsData);
       contactUsData
-          .forEach((element) => print("${element.id} -${element.value}"));
+          .forEach((element) => ("${element.id} -${element.value}"));
       // address = response.data!.addres!;
       notifyListeners();
     } else {
-      print("There is no data");
+      ("There is no data");
     }
   }
 
@@ -269,7 +269,7 @@ class ProfileProvider extends ChangeNotifier {
   void addAddressProvider() async {
     loading = true;
     notifyListeners();
-    print("Added Data");
+    // debugPrint("Added Data");
     Addres? addres = Addres(
         name: addressName.text,
         city: addressCity.text,
@@ -280,9 +280,9 @@ class ProfileProvider extends ChangeNotifier {
         longitude: long ?? 000000);
     AddressModel response =
         await sl<ProfileRepo>().addAddressRepo(addres: addres);
-    print("This is response ${response.hashCode}");
+    // ("This is response ${response.hashCode}");
 
-    print(response.status);
+    (response.status);
     if (response.status == true) {
       updateAdresss();
       loading = false;
@@ -292,7 +292,7 @@ class ProfileProvider extends ChangeNotifier {
     } else {
       loading = false;
       notifyListeners();
-      print("There is no data");
+      // ("There is no data");
     }
   }
 
@@ -312,9 +312,9 @@ class ProfileProvider extends ChangeNotifier {
         phone: phoneController.text == "" ? user!.phone : phoneController.text,
         image: imageController.text == "" ? user!.image : imageController.text);
 
-    print("This is response ${response.hashCode}");
+    ("This is response ${response.hashCode}");
 
-    print(response.status);
+    (response.status);
     if (response.status == true) {
       AppConfig.showSnakBar("${response.message}");
       loading = false;
@@ -332,7 +332,7 @@ class ProfileProvider extends ChangeNotifier {
       AppConfig.showSnakBar("${response.message}");
       loading = false;
       notifyListeners();
-      print("There is no data");
+      ("There is no data");
     }
   }
 
@@ -434,7 +434,7 @@ class ProfileProvider extends ChangeNotifier {
         AppConfig.showSnakBar("${response.message}");
         loading = false;
         notifyListeners();
-        print("There is no data");
+        ("There is no data");
       }
     }
   }
@@ -533,9 +533,9 @@ class ProfileProvider extends ChangeNotifier {
     bool servicestatus = await Geolocator.isLocationServiceEnabled();
 
     if (servicestatus) {
-      print("GPS service is enabled");
+      ("GPS service is enabled");
     } else {
-      print("GPS service is disabled.");
+      ("GPS service is disabled.");
     }
   }
 
@@ -545,14 +545,14 @@ class ProfileProvider extends ChangeNotifier {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        print('Location permissions are denied');
+        ('Location permissions are denied');
       } else if (permission == LocationPermission.deniedForever) {
-        print("'Location permissions are permanently denied");
+        ("'Location permissions are permanently denied");
       } else {
-        print("GPS Location service is granted");
+        ("GPS Location service is granted");
       }
     } else {
-      print("GPS Location permission granted.");
+      ("GPS Location permission granted.");
     }
   }
 
@@ -746,7 +746,7 @@ class ProfileProvider extends ChangeNotifier {
 
   void checkSelected() {
     if (addressValue == -1) {
-      print("This is lang value ");
+      ("This is lang value ");
       AppConfig.showSnakBar("You should Select an Address".tr());
     } else {
       sl<NavigationService>().navigateTo(paymentDetailsScreen);

@@ -17,7 +17,7 @@ class HttpAuth {
       data: {"email": email, "password": password},
     );
 
-    print(response.data);
+    // print(response.data);
     LoginResponse users = LoginResponse.fromJson(response.data);
     return users;
   }
@@ -35,8 +35,8 @@ class HttpAuth {
       },
     );
 
-    print("This is  realUri ${response.realUri}");
-    print("This is  respsBod ${response.statusCode}");
+    // print("This is  realUri ${response.realUri}");
+    // print("This is  respsBod ${response.statusCode}");
     LoginResponse users = LoginResponse.fromJson(response.data);
     return users;
   }
@@ -89,7 +89,7 @@ class HttpAuth {
         "email": "$email",
       },
     );
-    print("This is  resps ${response.data}");
+    // print("This is  resps ${response.data}");
 
     LoginResponse users = LoginResponse.fromJson(response.data);
     return users;
@@ -98,7 +98,7 @@ class HttpAuth {
   Future<LogoutModel> logout({String? email, String? otp}) async {
     var token =
         await sl<Storage>().secureStorage.read(key: SharedPrefsConstant.TOKEN);
-    print("This is logout token $token");
+    // print("This is logout token $token");
     Response response = await client.post('${ApiConstant.logout}',
         options: Options(
           headers: <String, String>{
@@ -106,7 +106,7 @@ class HttpAuth {
             "lang": "${sl<SharedLocal>().getLanguage}",
           },
         ));
-    print("This is  resps ${response.data}");
+    // print("This is  resps ${response.data}");
 
     LogoutModel logoutModel = LogoutModel.fromJson(response.data);
     return logoutModel;
@@ -129,8 +129,8 @@ class HttpAuth {
         },
       ),
     );
-    print("This is  resps ${response.data}");
-    print("This is  respsBod ${response.statusCode}");
+    // print("This is  resps ${response.data}");
+    // print("This is  respsBod ${response.statusCode}");
 
     LoginResponse users = LoginResponse.fromJson(response.data);
     return users;

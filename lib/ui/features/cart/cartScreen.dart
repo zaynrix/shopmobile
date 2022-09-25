@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shopmobile/data/local_repo.dart';
 import 'package:shopmobile/di.dart';
 import 'package:shopmobile/resources/assets_manager.dart';
 import 'package:shopmobile/resources/color_manager.dart';
@@ -10,6 +10,7 @@ import 'package:shopmobile/routing/navigation.dart';
 import 'package:shopmobile/routing/routes.dart';
 import 'package:shopmobile/ui/features/cart/cartProvider.dart';
 import 'package:shopmobile/ui/shared/pages/empty.dart';
+import 'package:shopmobile/ui/shared/pages/reConnect.dart';
 import 'package:shopmobile/ui/shared/skeletonWidget/ShimmerHelper.dart';
 import 'package:shopmobile/ui/shared/widgets/CustomAppBar.dart';
 import 'package:shopmobile/ui/shared/widgets/CustomCTAButton.dart';
@@ -45,125 +46,142 @@ class Cart extends StatelessWidget {
               )
             : null,
         backgroundColor: ColorManager.backgroundColor,
-        body: RefreshIndicator(
-          onRefresh: () async {
-            await value.refreshCart();
+        body: OfflineBuilder(
+          connectivityBuilder: (
+            BuildContext context,
+            ConnectivityResult connectivity,
+            Widget child,
+          ) {
+            if (connectivity == ConnectivityResult.none) {
+              return NetworkDisconnected(onPress: () {
+                // sl<HomeProvider>().getHomeProvider();
+              });
+            } else {
+              return child;
+            }
           },
-          child: value.cartINIT == true && value.cartList.length == 0
-              ? SingleChildScrollView(
-                  child: ShimmerHelper().buildListShimmer(item_count: 10),
-                )
-              : value.cartList.length > 0
-                  ? Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Expanded(
-                          child: ListView.separated(
-                              padding: EdgeInsets.symmetric(horizontal: 20.w),
-                              shrinkWrap: true,
-                              separatorBuilder: (context, index) => SizedBox(
-                                    height: 16.h,
-                                  ),
-                              itemCount: value.cartList.length,
-                              itemBuilder: (context, index) => InkWell(
-                                  onTap: () {
-                                    sl<NavigationService>()
-                                        .navigateTo(productDetilas, args: [
-                                      value.cartList[index].product!.id
-                                    ]);
-                                  },
-                                  child: CustomCart(index: index))),
-                        ),
-                        // Spacer(),
-                        Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.03),
-                                  offset: Offset(0, -10.0),
-                                  blurRadius: 14.0,
-                                  spreadRadius: 0.0,
-                                ),
-                              ],
-                              color: ColorManager.white,
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(12.r),
-                                  topRight: Radius.circular(12.r))),
-                          child: SafeArea(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                CustomListTile(
-                                  title: "Subtotal",
-                                  trail:
-                                      "${value.cartModelList == null ? 00 : value.cartTotal} AED",
-                                ),
-                                CustomListTile(
-                                  title: "Discount",
-                                  trail: "30%",
-                                ),
-                                CustomListTile(
-                                  color: ColorManager.primaryGreen,
-                                  title: "Shipping",
-                                  trail: "-\$11.00",
-                                  trailColor: ColorManager.primaryGreen,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 25.0),
-                                  child: MySeparator(color: Colors.grey),
-                                ),
-                                ListTile(
-                                  title: Text(
-                                    "Total".tr(),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline3!
-                                        .copyWith(
-                                            color: ColorManager.black,
-                                            fontWeight:
-                                                FontWeightManager.semiBold),
-                                  ),
-                                  trailing: Text(
-                                    "${value.cartModelList == null ? 00 : value.cartTotal} AED",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline3!
-                                        .copyWith(
-                                            color: ColorManager.black,
-                                            fontWeight:
-                                                FontWeightManager.semiBold),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 15.h,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 25),
-                                  child: CustomeCTAButton(
-                                    trigger: false,
-                                    primary: ColorManager.secondryBlack,
-                                    onPressed: () {
+          child: RefreshIndicator(
+            onRefresh: () async {
+              await value.refreshCart();
+            },
+            child: value.cartINIT == true && value.cartList.length == 0
+                ? SingleChildScrollView(
+                    child: ShimmerHelper().buildListShimmer(item_count: 10),
+                  )
+                : value.cartList.length > 0
+                    ? Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Expanded(
+                            child: ListView.separated(
+                                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                                shrinkWrap: true,
+                                separatorBuilder: (context, index) => SizedBox(
+                                      height: 16.h,
+                                    ),
+                                itemCount: value.cartList.length,
+                                itemBuilder: (context, index) => InkWell(
+                                    onTap: () {
                                       sl<NavigationService>()
-                                          .navigateTo(paymentMethodScreen);
-                                      // value.loginProvider();
+                                          .navigateTo(productDetilas, args: [
+                                        value.cartList[index].product!.id
+                                      ]);
                                     },
-                                    title: "Proceedcheckout",
+                                    child: CustomCart(index: index))),
+                          ),
+                          // Spacer(),
+                          Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.03),
+                                    offset: Offset(0, -10.0),
+                                    blurRadius: 14.0,
+                                    spreadRadius: 0.0,
                                   ),
-                                ),
-                              ],
+                                ],
+                                color: ColorManager.white,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(12.r),
+                                    topRight: Radius.circular(12.r))),
+                            child: SafeArea(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  CustomListTile(
+                                    title: "Subtotal",
+                                    trail:
+                                        "${value.cartModelList == null ? 00 : value.cartTotal} AED",
+                                  ),
+                                  CustomListTile(
+                                    title: "Discount",
+                                    trail: "30%",
+                                  ),
+                                  CustomListTile(
+                                    color: ColorManager.primaryGreen,
+                                    title: "Shipping",
+                                    trail: "-\$11.00",
+                                    trailColor: ColorManager.primaryGreen,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 25.0),
+                                    child: MySeparator(color: Colors.grey),
+                                  ),
+                                  ListTile(
+                                    title: Text(
+                                      "Total".tr(),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline3!
+                                          .copyWith(
+                                              color: ColorManager.black,
+                                              fontWeight:
+                                                  FontWeightManager.semiBold),
+                                    ),
+                                    trailing: Text(
+                                      "${value.cartModelList == null ? 00 : value.cartTotal} AED",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline3!
+                                          .copyWith(
+                                              color: ColorManager.black,
+                                              fontWeight:
+                                                  FontWeightManager.semiBold),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 15.h,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 25),
+                                    child: CustomeCTAButton(
+                                      trigger: false,
+                                      primary: ColorManager.secondryBlack,
+                                      onPressed: () {
+                                        sl<NavigationService>()
+                                            .navigateTo(paymentMethodScreen);
+                                      },
+                                      title: "Proceedcheckout",
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 15.h,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    )
-                  : EmptyScreen(
-            path: ImageAssets.splashLogoSvg,
-             title:"Your Cart is Empty" ,
-             subtitle: "Looks_like_cart" ,
+                        ],
+                      )
+                    : EmptyScreen(
+                        path: ImageAssets.splashLogoSvg,
+                        title: "Your Cart is Empty",
+                        subtitle: "Looks_like_cart",
+                      ),
           ),
         ),
       ),

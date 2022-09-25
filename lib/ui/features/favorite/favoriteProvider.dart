@@ -25,7 +25,7 @@ class FavouriteProvider extends ChangeNotifier {
       wishlistInit = false;
       notifyListeners();
     } else {
-      print("There is no data");
+      //("There is no data");
     }
   }
 
@@ -47,8 +47,8 @@ class FavouriteProvider extends ChangeNotifier {
     favoriteDatanew!.removeAt(index);
 
     if (res.status == true) {
-      print("Thisis true${favoriteDatanew!}");
-      print("this is product id $id ");
+      //("Thisis true${favoriteDatanew!}");
+      //("this is product id $id ");
       sl<HomeProvider>().products.forEach((element) {
         id == element.id ? element.inFavorites = false : "";
         notifyListeners();

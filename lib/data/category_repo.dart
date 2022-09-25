@@ -17,10 +17,10 @@ class CategoryRepo {
     // var token = sl<SharedLocal>().getUser();
     Response response = await client!.get(
       '${ApiConstant.categories}',
-      options: Options(
-        headers: <String, String>{
-          "lang": "${sl<SharedLocal>().getLanguage}",},
-      ),
+      // options: Options(
+      //   headers: <String, String>{
+      //     "lang": "${sl<SharedLocal>().getLanguage}",},
+      // ),
     );
     Categories categories = Categories.fromJson(response.data);
     print(categories.status);
@@ -28,14 +28,16 @@ class CategoryRepo {
   }
 
   Future<CategoriesDetails> getSubCategoreisData({int? id}) async {
-    var token =
-        await sl<Storage>().secureStorage.read(key: SharedPrefsConstant.TOKEN);
+    // var token =
+    //     await sl<Storage>().secureStorage.read(key: SharedPrefsConstant.TOKEN);
     // var token = sl<SharedLocal>().getUser();
     Response response = await client!.get('${ApiConstant.categories}/$id',
-        options: Options(headers: <String, String>{
-          "lang": "${sl<SharedLocal>().getLanguage}",
-          "Authorization": "$token"
-        }));
+        // options: Options(headers: <String, String>{
+        //   "lang": "${sl<SharedLocal>().getLanguage}",
+        //   "Authorization": "$token"
+        // }
+        // )
+    );
 
     CategoriesDetails categoriesDetails =
         CategoriesDetails.fromJson(response.data);

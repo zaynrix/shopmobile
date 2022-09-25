@@ -18,7 +18,6 @@ import 'package:shopmobile/utils/appConfig.dart';
 import 'package:collection/collection.dart';
 
 class HomeProvider extends ChangeNotifier {
-
   bool? changed = false;
   int current = 0;
   RangeValues rangeValues = RangeValues(20000, 30000);
@@ -30,6 +29,7 @@ class HomeProvider extends ChangeNotifier {
   final controller = PageController(viewportFraction: 0.8, keepPage: true);
   final CarouselController carouselController = CarouselController();
   TextEditingController searchController = TextEditingController();
+
 // final pageStroeKey = PageStorageKey("HomeKey");
   List<Products> products = [];
   List<Sub> searchList = [];
@@ -38,20 +38,17 @@ class HomeProvider extends ChangeNotifier {
   List<NotificationItem> notifications = [];
 
   void getHomeProvider() async {
-    print("Added Data");
-    searchProduct(tex: "Xiam");
-    HomeResponse response = await sl<HomeRepo>().getHome();
-
-    print("This is response ${response.hashCode}");
-
-    print(response.status);
-    if (response.status == true) {
-      banners = response.data!.banners!;
-      print("this is banners Adding ");
-      products = response.data!.products!;
-      notifyListeners();
-    } else {
-      print("There is no data");
+    //("Added Data");
+    try {
+      searchProduct(tex: "Xiam");
+      HomeResponse response = await sl<HomeRepo>().getHome();
+      if (response.status == true) {
+        banners = response.data!.banners!;
+        products = response.data!.products!;
+        notifyListeners();
+      } else {}
+    } catch (e) {
+      throw e;
     }
   }
 
@@ -99,68 +96,65 @@ class HomeProvider extends ChangeNotifier {
   }
 
   void getNotificationProvider() async {
-    print("Added Data");
     Notifications response = await sl<HomeRepo>().getNotifications();
-    print("This is response ${response.status}");
-    print("This is response ${response.data!.notification}");
+   try{
 
-    print(response.status);
+
+
     if (response.status == true) {
       notifications = response.data!.notification!;
       notifficationINIT = false;
       notifyListeners();
-      print("This is notifications ${notifications.length}");
-    } else {
-      print("There is no data");
     }
+   }catch(e){
+     notifficationINIT = true;
+     notifyListeners();
+
+   }
   }
 
   void getProductDetails({int? id}) async {
-    print("There is getProductDetails $id");
     productDetails = null;
 
     productModel.ProductModel response =
-        await sl<HomeRepo>().productDetails(ProductId: id);
+    await sl<HomeRepo>().productDetails(ProductId: id);
 
-    print(response.status);
     if (response.status == true) {
-      print("There is response.status ${response.status}");
       productDetails = response.data!;
-      print("This is name ${productDetails!.name}");
       notifyListeners();
     } else {
-      print("There is no data");
     }
   }
 
   void toggleFav({bool? isFav, int? x, id}) async {
     isFav = !isFav!;
     isInWishList = isFav;
-    x != null ? products.elementAt(x).inFavorites = isInWishList : 0;
+    x != null ? products
+        .elementAt(x)
+        .inFavorites = isInWishList : 0;
     productDetails?.inFavorites = isInWishList;
     notifyListeners();
-    print("This is the isInWishList :$isInWishList");
     products.forEach(
-      (element) {
+          (element) {
         id == element.id ? element.inFavorites = isInWishList : "";
         notifyListeners();
       },
     );
     sl<ExploreProvider>().topPrice.forEach(
-      (element) {
+          (element) {
         id == element.id ? element.inFavorites = isInWishList : "";
         notifyListeners();
       },
     );
     sl<ExploreProvider>().mostViews.forEach(
-      (element) {
+          (element) {
         id == element.id ? element.inFavorites = isInWishList : "";
         notifyListeners();
       },
     );
 
     sl<CategoryProvider>().subCategory.forEach(
-      (element) {
+          (element) {
         id == element.id ? element.inFavorites = isInWishList : "";
         notifyListeners();
       },
@@ -173,7 +167,7 @@ class HomeProvider extends ChangeNotifier {
     );
     notifyListeners();
     faResponse.FavoriteCheck favoriteCheck =
-        await sl<FavouriteRepo>().removeFavoriteData(id);
+    await sl<FavouriteRepo>().removeFavoriteData(id);
 
     sl<FavouriteProvider>().updateFav();
     notifyListeners();
@@ -203,14 +197,15 @@ class HomeProvider extends ChangeNotifier {
     current = index!;
     notifyListeners();
   }
+
   List<Sub> randomLists(int n, List<Sub> source) => source.sample(n);
 
   Future searchProduct({String? tex}) async {
     CategoriesDetails response = await sl<HomeRepo>().searchData(tex: tex);
 
-    print(response.status);
+    //(response.status);
     if (response.status == true) {
-      searchListInitial =randomLists(6, response.data!.sub!.reversed.toList());
+      searchListInitial = randomLists(6, response.data!.sub!.reversed.toList());
 
       searchList = response.data!.sub!;
       notifyListeners();
@@ -219,7 +214,7 @@ class HomeProvider extends ChangeNotifier {
 
       notifyListeners();
     } else {
-      print("There is no data");
+      //("There is no data");
     }
   }
 
@@ -249,7 +244,7 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
 // searchProduct(tex: "");
     String name = searchController.text;
-    print("filter cars for name " + name);
+    //("filter cars for name " + name);
     if (name.isEmpty && searchList.isEmpty) {
       searchProduct(tex: "").then((value) {
         if (value != null) {
@@ -265,8 +260,8 @@ class HomeProvider extends ChangeNotifier {
       notifyListeners();
     } else {
       for (Sub c in searchList) {
-        print(
-            "c.price! ${c.price!}  rangeValues.start ${rangeValues.start}  - rangeValues.end ${rangeValues.end} ");
+        //(
+        //     "c.price! ${c.price!}  rangeValues.start ${rangeValues.start}  - rangeValues.end ${rangeValues.end} ");
         if (c.price! >= rangeValues.start && c.price! <= rangeValues.end) {
           tmp.add(c);
           notifyListeners();
@@ -276,11 +271,10 @@ class HomeProvider extends ChangeNotifier {
     searchList = tmp;
     notifyListeners();
     sl<NavigationService>().pop();
-
   }
 
   selectedFilter() {
-    print("Clicked");
+    //("Clicked");
 
     filterCars();
     searchList.forEach((element) {
@@ -294,7 +288,7 @@ class HomeProvider extends ChangeNotifier {
 
     notifyListeners();
     sl<NavigationService>().pop();
-    print("after searchProduct");
+    //("after searchProduct");
   }
 
   StreamController<List<Sub>> streamController = BehaviorSubject();
@@ -304,13 +298,8 @@ class HomeProvider extends ChangeNotifier {
   filter(String searchQuery) {
     List<Sub> filteredList = searchList
         .where((Sub user) =>
-            user.name!.toLowerCase().contains(searchQuery.toLowerCase()))
+        user.name!.toLowerCase().contains(searchQuery.toLowerCase()))
         .toList();
     streamController.sink.add(filteredList);
   }
-
-
-
-
-
 }

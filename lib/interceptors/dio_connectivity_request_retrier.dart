@@ -13,91 +13,95 @@ class DioConnectivityRequestRetrier {
     required this.connectivity,
   });
 
-  // Future<Response> scheduleRequestRetry(RequestOptions requestOptions) async {
-  //   StreamSubscription? streamSubscription;
-  //   final responseCompleter = Completer<Response>();
-  //
-  //   streamSubscription = connectivity.onConnectivityChanged.listen(
-  //     (connectivityResult) async {
-  //       if (connectivityResult != ConnectivityResult.none) {
-  //         print("This is IF $connectivityResult ${ConnectivityResult.none}");
-  //         streamSubscription!.cancel();
-  //         // Complete the completer instead of returning
-  //         responseCompleter.complete(
-  //           dio.request(
-  //             requestOptions.path,
-  //             cancelToken: requestOptions.cancelToken,
-  //             data: requestOptions.data,
-  //             onReceiveProgress: requestOptions.onReceiveProgress,
-  //             onSendProgress: requestOptions.onSendProgress,
-  //             queryParameters: requestOptions.queryParameters,
-  //             options: Options(
-  //                 headers: requestOptions.headers,
-  //                 extra: requestOptions.extra,
-  //                 contentType: requestOptions.contentType,
-  //                 followRedirects: requestOptions.followRedirects,
-  //                 listFormat: requestOptions.listFormat,
-  //                 maxRedirects: requestOptions.maxRedirects,
-  //                 method: requestOptions.method,
-  //                 receiveDataWhenStatusError:
-  //                     requestOptions.receiveDataWhenStatusError,
-  //                 receiveTimeout: requestOptions.receiveTimeout,
-  //                 requestEncoder: requestOptions.requestEncoder,
-  //                 responseDecoder: requestOptions.responseDecoder,
-  //                 responseType: requestOptions.responseType,
-  //                 sendTimeout: requestOptions.sendTimeout,
-  //                 validateStatus: requestOptions.validateStatus),
-  //           ),
-  //         );
-  //       }
-  //       print("This outside if ${connectivityResult.name}");
-  //     },
-  //   );
-  //   print("This outside ");
-  //   return responseCompleter.future;
-  // }
-  /**   receiveDataWhenStatusError: true,
-    connectTimeout: 50000,
-    receiveTimeout: 30000,
-    responseType: ResponseType.json,
-    baseUrl: '${ApiConstant.url}',
-    contentType: 'application/json',
-    * */
-  Future<Response> scheduleRequestRetry(RequestOptions requestOptions) async {
-    late StreamSubscription streamSubscription;
+  Future<Response> scheduleRequestRetry(RequestOptions requestOptions,
+      {DioError? error, ErrorInterceptorHandler? handler}) async {
+    late StreamSubscription? streamSubscription;
     final responseCompleter = Completer<Response>();
 
     streamSubscription = connectivity.onConnectivityChanged.listen(
       (connectivityResult) async {
         if (connectivityResult != ConnectivityResult.none) {
-          streamSubscription.cancel();
+          print("This is IF $connectivityResult ${ConnectivityResult.none}");
           // Complete the completer instead of returning
-          responseCompleter.complete(
-            dio.request(
-              requestOptions.path,
-options: Options(
+          streamSubscription!.cancel();
+          try {
+            responseCompleter.complete(
+              dio.fetch(requestOptions
 
-  receiveDataWhenStatusError: true,
-  receiveTimeout: 30000,
-  responseType: ResponseType.json,
-  // baseUrl: '${ApiConstant.url}',
-  contentType: 'application/json',
-
-),
-              cancelToken: requestOptions.cancelToken,
-              data: requestOptions.data,
-              onReceiveProgress: requestOptions.onReceiveProgress,
-              onSendProgress: requestOptions.onSendProgress,
-              queryParameters: requestOptions.queryParameters,
-              // options: requestOptions,
-            ),
-          );
+                  // requestOptions.path,
+                  // cancelToken: requestOptions.cancelToken,
+                  // data: requestOptions.data,
+                  // onReceiveProgress: requestOptions.onReceiveProgress,
+                  // onSendProgress: requestOptions.onSendProgress,
+                  // queryParameters: requestOptions.queryParameters,
+                  // options: Options(
+                  //     headers: requestOptions.headers,
+                  //     extra: requestOptions.extra,
+                  //     contentType: requestOptions.contentType,
+                  //     followRedirects: requestOptions.followRedirects,
+                  //     listFormat: requestOptions.listFormat,
+                  //     maxRedirects: requestOptions.maxRedirects,
+                  //     method: requestOptions.method,
+                  //     receiveDataWhenStatusError:
+                  //         requestOptions.receiveDataWhenStatusError,
+                  //     receiveTimeout: requestOptions.receiveTimeout,
+                  //     requestEncoder: requestOptions.requestEncoder,
+                  //     responseDecoder: requestOptions.responseDecoder,
+                  //     responseType: requestOptions.responseType,
+                  //     sendTimeout: requestOptions.sendTimeout,
+                  //     validateStatus: requestOptions.validateStatus),
+                  ),
+            );
+          } on DioError catch (retryError) {
+            handler!.next(retryError);
+          }
         }
+        print("This outside if ${connectivityResult.name}");
       },
     );
-
+    print("This outside ");
     return responseCompleter.future;
   }
+/**   receiveDataWhenStatusError: true,
+    connectTimeout: 50000,
+    receiveTimeout: 30000,
+    responseType: ResponseType.json,
+    baseUrl: '${ApiConstant.url}',
+    contentType: 'application/json',
+ * */
+// Future<Response> scheduleRequestRetry(RequestOptions requestOptions) async {
+//   late StreamSubscription streamSubscription;
+//   final responseCompleter = Completer<Response>();
+//
+//   streamSubscription = connectivity.onConnectivityChanged.listen(
+//     (connectivityResult) async {
+//       if (connectivityResult != ConnectivityResult.none) {
+//         // Complete the completer instead of returning
+//         responseCompleter.complete(
+//           dio.fetch(requestOptions
+//             // requestOptions.path,
+//             // options: Options(
+//             //   receiveDataWhenStatusError: true,
+//             //   receiveTimeout: 30000,
+//             //   responseType: ResponseType.json,
+//             //   // baseUrl: '${ApiConstant.url}',
+//             //   contentType: 'application/json',
+//             // ),
+//             // cancelToken: requestOptions.cancelToken,
+//             // data: requestOptions.data,
+//             // onReceiveProgress: requestOptions.onReceiveProgress,
+//             // onSendProgress: requestOptions.onSendProgress,
+//             // queryParameters: requestOptions.queryParameters,
+//             // options: requestOptions,
+//           ),
+//         );
+//         streamSubscription.cancel();
+//       }
+//     },
+//   );
+//
+//   return responseCompleter.future;
+// }
 }
 
 // extension _AsOptions on RequestOptions {

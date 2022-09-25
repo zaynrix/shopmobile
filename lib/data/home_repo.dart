@@ -15,85 +15,28 @@ class HomeRepo {
   HomeRepo({this.client});
 
   Future<HomeResponse> getHome() async {
-    print("Home");
-    // var token =
-    //     await sl<Storage>().secureStorage.read(key: SharedPrefsConstant.TOKEN);
-    // print("This is ${token}");
-
-    Response response = await client!.get('${ApiConstant.home}',
-
-        options: Options(
-          headers: <String, String>{
-            "lang": "${sl<SharedLocal>().getLanguage}",
-            // "Authorization": "$token"
-          },
-        ));
-    print("This is  realUri ${response.realUri}");
-
+    Response response = await client!.get('${ApiConstant.home}',);
     HomeResponse homeResponse = HomeResponse.fromJson(response.data);
     return homeResponse;
   }
 
   Future<Notifications> getNotifications() async {
-    var token =
-        await sl<Storage>().secureStorage.read(key: SharedPrefsConstant.TOKEN);
-    print("This is ${token}");
-
-    Response response = await client!.get('${ApiConstant.notifications}',
-        options: Options(
-          headers: <String, String>{ "lang": "${sl<SharedLocal>().getLanguage}", "Authorization": "$token"},
-        ));
+    Response response = await client!.get('${ApiConstant.notifications}',);
     Notifications notifications = Notifications.fromJson(response.data);
     return notifications;
   }
 
   Future<ProductModel> productDetails({int? ProductId}) async {
-    var token =
-        await sl<Storage>().secureStorage.read(key: SharedPrefsConstant.TOKEN);
-    print("This is ${token}");
-
-    Response response = await client!.get('${ApiConstant.products}/$ProductId',
-
-        options: Options(
-          headers: <String, String>{ "lang": "${sl<SharedLocal>().getLanguage}", "Authorization": "$token"},
-        ));
+    Response response = await client!.get('${ApiConstant.products}/$ProductId',);
     ProductModel productModel = ProductModel.fromJson(response.data);
     print("This is response ${productModel.message}");
-    print("This is response ${productModel.status}");
-    print("This is response ${productModel.data!.name}");
-
     return productModel;
   }
 
   Future<CategoriesDetails> searchData({String? tex}) async {
-    var token =
-        await sl<Storage>().secureStorage.read(key: SharedPrefsConstant.TOKEN);
-    print("This is ${token}");
-
-    Response response = await client!.post(
-
-      '${ApiConstant.search}',
-      data: {"text": "$tex"},
-
-      options: Options(
-        headers: <String, String>{ "lang": "${sl<SharedLocal>().getLanguage}", "Authorization": "$token"},
-      ),
-    );
+    Response response = await client!.post('${ApiConstant.search}', data: {"text": "$tex"},);
     CategoriesDetails categoriesDetails =
         CategoriesDetails.fromJson(response.data);
     return categoriesDetails;
   }
-
-// Future<HomeResponse> getHome() async {
-//   var token =
-//   await sl<Storage>().secureStorage.read(key: SharedPrefsConstant.TOKEN);
-//   print("This is ${token}");
-//
-//   Response response = await client!.get('${ApiConstant.home}',
-//       options: Options(
-//         headers: <String, String>{"lang": "en", "Authorization": "$token"},
-//       ));
-//   HomeResponse homeResponse = HomeResponse.fromJson(response.data);
-//   return homeResponse;
-// }
 }

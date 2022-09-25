@@ -22,7 +22,7 @@ class CategoryProvider extends ChangeNotifier {
       cateInit = false;
       notifyListeners();
     } else {
-      print("There is no data");
+      //("There is no data");
     }
   }
 
@@ -42,7 +42,7 @@ class CategoryProvider extends ChangeNotifier {
       cateInit = false;
       notifyListeners();
     } else {
-      print("There is no data");
+      //("There is no data");
     }
   }
 }

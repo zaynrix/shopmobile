@@ -15,8 +15,11 @@ class RetryOnConnectionChangeInterceptor extends Interceptor {
     if (_shouldRetry(err)) {
       try {
         print("sould retry");
-        return requestRetrier.scheduleRequestRetry(err.requestOptions);
+        return requestRetrier.scheduleRequestRetry(err.requestOptions,handler: ErrorInterceptorHandler);
       } catch (e) {
+        // return super.onError(err, ErrorInterceptorHandler);
+
+
         // Let any new error from the retrier pass through
         return e;
       }
