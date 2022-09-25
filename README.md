@@ -30,7 +30,7 @@ https://www.figma.com/file/pgZhGkpSWwrkUqMoEYfPq0/Mobile-shop-App-UI-Kit?node-id
 
 
 <p align="center">
-<img src="screenShots/Thumbnails.png" width="230" />
+<img src="screenShots/Thumbnails.png"  />
 
   </p>
 <p align="center">
