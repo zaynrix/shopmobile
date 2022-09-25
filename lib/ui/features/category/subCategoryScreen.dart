@@ -62,7 +62,6 @@ class SubCategoryScreen extends StatelessWidget {
               ) {
             if (connectivity == ConnectivityResult.none) {
               return NetworkDisconnected(onPress: (){
-                // sl<HomeProvider>().getHomeProvider();
               });
             } else {
               return child;

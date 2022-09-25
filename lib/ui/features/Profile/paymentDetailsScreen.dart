@@ -21,14 +21,16 @@ class PaymentDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ProfileProvider>(
       builder: (context, value, child) => Scaffold(
-        // key: value.productDetailsScaffoldKey,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25),
           child: CustomeCTAButton(
+
             trigger: false,
             primary: ColorManager.primaryGreen,
             onPressed: () {
+              FocusScope.of(context).unfocus();
+
               value.voidConfirmMethod();
             },
             title: "Confirm",

@@ -22,6 +22,8 @@ class PaymentMethodScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ProfileProvider>(
       builder: (context, value, child) => Scaffold(
+        resizeToAvoidBottomInset: false,
+        key: value.productDetailsScaffoldKey,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25),

@@ -23,7 +23,6 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: profileProvider.productDetailsScaffoldKey,
         backgroundColor: ColorManager.backgroundColor,
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 10.h),

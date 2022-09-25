@@ -108,13 +108,13 @@ class AuthProvider extends ChangeNotifier {
         notifyListeners();
 
         // sl<SharedLocal>().setSignUpTempo("$selectedLocation${phone.text}");
-        AppConfig.showSnakBar("Account was created Successfully!! ");
+        AppConfig.showSnakBar("${res.message??"Account was created Successfully!!"}");
         // sl<NavigationService>().navigateToAndRemove(otp);
         sl<NavigationService>().navigateToAndRemove(login);
       } else {
         loading = false;
         notifyListeners();
-        AppConfig.showSnakBar("Something Wrong, Try again");
+        AppConfig.showSnakBar("${res.message??"Something Wrong, Try again"}");
       }
     }
   }

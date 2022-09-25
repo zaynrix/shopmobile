@@ -6,7 +6,7 @@ class ApiConstant {
       : "https://student.valuxapps.com/api/";
 
   static String authLogin = SoftTagi
-      ? 'auth/login' : "/login";
+      ? 'auth/login' : "login";
 
   static String authSignup = SoftTagi
       ? '/auth/signup': "/register";

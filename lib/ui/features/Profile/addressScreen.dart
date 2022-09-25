@@ -26,6 +26,7 @@ class AddressScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ProfileProvider>(
       builder: (context, value, child) => Scaffold(
+        resizeToAvoidBottomInset: false,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -57,124 +58,138 @@ class AddressScreen extends StatelessWidget {
                   return InkWell(
                     onTap: () {
                       showModalBottomSheet(
-                        // isScrollControlled: true,
+                        isScrollControlled: true,
                         // isDismissible: true,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         backgroundColor: ColorManager.backgroundColor,
                         context: context,
-                        builder: (context) => Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 25, vertical: 25),
-                          child: ListView(
-                            children: [
-                              Center(
-                                child: Text(
-                                  "NewAddress".tr(),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .subtitle2!
-                                      .copyWith(
-                                          color: ColorManager.black,
-                                          fontWeight:
-                                              FontWeightManager.regular),
+                        builder: (context) => ListView(
+                          shrinkWrap: true,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.only(
+                                bottom: MediaQuery.of(context).viewInsets.bottom,
+                              ),
+                              child: Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 25),
+
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Center(
+                                        child: Text(
+                                          "NewAddress".tr(),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle2!
+                                              .copyWith(
+                                                  color: ColorManager.black,
+                                                  fontWeight:
+                                                      FontWeightManager.regular),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 15.h,
+                                      ),
+                                      CustomTextFiled(
+                                        hintText: 'AddressName'.tr(),
+                                        keyboardType: TextInputType.emailAddress,
+                                        focuse: (_) =>
+                                            FocusScope.of(context).nextFocus(),
+                                        textInputAction: TextInputAction.next,
+                                        onChanged: (val) {
+                                          value.addressName.text = val!;
+                                        },
+                                        validator: (value) =>
+                                            Validator.valueExists(value ?? ""),
+                                      ),
+                                      SizedBox(
+                                        height: 15.h,
+                                      ),
+                                      CustomTextFiled(
+                                        hintText: 'City'.tr(),
+                                        keyboardType: TextInputType.emailAddress,
+                                        focuse: (_) =>
+                                            FocusScope.of(context).nextFocus(),
+                                        textInputAction: TextInputAction.next,
+                                        onChanged: (val) {
+                                          value.addressCity.text = val!;
+                                        },
+                                        validator: (value) =>
+                                            Validator.valueExists(value ?? ""),
+                                      ),
+                                      SizedBox(
+                                        height: 15.h,
+                                      ),
+                                      CustomTextFiled(
+                                        hintText: 'Region'.tr(),
+                                        keyboardType: TextInputType.emailAddress,
+                                        focuse: (_) =>
+                                            FocusScope.of(context).nextFocus(),
+                                        textInputAction: TextInputAction.next,
+                                        onChanged: (val) {
+                                          value.addressRegion.text = val!;
+                                        },
+                                        validator: (value) =>
+                                            Validator.valueExists(value ?? ""),
+                                      ),
+                                      SizedBox(
+                                        height: 15.h,
+                                      ),
+                                      CustomTextFiled(
+                                        hintText: 'details'.tr(),
+                                        keyboardType: TextInputType.emailAddress,
+                                        focuse: (_) =>
+                                            FocusScope.of(context).nextFocus(),
+                                        textInputAction: TextInputAction.next,
+                                        onChanged: (val) {
+                                          value.addressDetails.text = val!;
+                                        },
+                                        validator: (value) =>
+                                            Validator.valueExists(value ?? ""),
+                                      ),
+                                      SizedBox(
+                                        height: 15.h,
+                                      ),
+                                      CustomTextFiled(
+                                        hintText: 'notes'.tr(),
+                                        keyboardType: TextInputType.emailAddress,
+                                        focuse: (_) =>
+                                            FocusScope.of(context).nextFocus(),
+                                        textInputAction: TextInputAction.next,
+                                        onChanged: (val) {
+                                          value.addressNotes.text = val!;
+                                        },
+                                        validator: (value) =>
+                                            Validator.valueExists(value ?? ""),
+                                      ),
+                                      SizedBox(
+                                        height: 15.h,
+                                      ),
+                                      CustomeCTAButton(
+                                        ProgressColor: ColorManager.white,
+                                        colorBorder: ColorManager.secondColor,
+                                        haveBorder: false,
+                                        textColor: ColorManager.white,
+                                        trigger: value.loading,
+                                        primary: ColorManager.primaryGreen,
+                                        onPressed: () {
+                                          value.addAddressProvider();
+                                          // value. filterCars();
+                                          // value.editProfile();
+                                        },
+                                        title: "AddAddress",
+                                        fontSized: 17.sp,
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
-                              SizedBox(
-                                height: 15.h,
-                              ),
-                              CustomTextFiled(
-                                hintText: 'AddressName'.tr(),
-                                keyboardType: TextInputType.emailAddress,
-                                focuse: (_) =>
-                                    FocusScope.of(context).nextFocus(),
-                                textInputAction: TextInputAction.next,
-                                onChanged: (val) {
-                                  value.addressName.text = val!;
-                                },
-                                validator: (value) =>
-                                    Validator.valueExists(value ?? ""),
-                              ),
-                              SizedBox(
-                                height: 15.h,
-                              ),
-                              CustomTextFiled(
-                                hintText: 'City'.tr(),
-                                keyboardType: TextInputType.emailAddress,
-                                focuse: (_) =>
-                                    FocusScope.of(context).nextFocus(),
-                                textInputAction: TextInputAction.next,
-                                onChanged: (val) {
-                                  value.addressCity.text = val!;
-                                },
-                                validator: (value) =>
-                                    Validator.valueExists(value ?? ""),
-                              ),  SizedBox(
-                                height: 15.h,
-                              ),
-                              CustomTextFiled(
-                                hintText: 'Region'.tr(),
-                                keyboardType: TextInputType.emailAddress,
-                                focuse: (_) =>
-                                    FocusScope.of(context).nextFocus(),
-                                textInputAction: TextInputAction.next,
-                                onChanged: (val) {
-                                  value.addressRegion.text = val!;
-                                },
-                                validator: (value) =>
-                                    Validator.valueExists(value ?? ""),
-                              ), SizedBox(
-                                height: 15.h,
-                              ),
-                              CustomTextFiled(
-                                hintText: 'details'.tr(),
-                                keyboardType: TextInputType.emailAddress,
-                                focuse: (_) =>
-                                    FocusScope.of(context).nextFocus(),
-                                textInputAction: TextInputAction.next,
-                                onChanged: (val) {
-                                  value.addressDetails.text = val!;
-                                },
-                                validator: (value) =>
-                                    Validator.valueExists(value ?? ""),
-                              ),SizedBox(
-                                height: 15.h,
-                              ),
-                              CustomTextFiled(
-                                hintText: 'notes'.tr(),
-                                keyboardType: TextInputType.emailAddress,
-                                focuse: (_) =>
-                                    FocusScope.of(context).nextFocus(),
-                                textInputAction: TextInputAction.next,
-                                onChanged: (val) {
-                                  value.addressNotes.text = val!;
-                                },
-                                validator: (value) =>
-                                    Validator.valueExists(value ?? ""),
-                              ),
-                              SizedBox(
-                                height: 15.h,
-                              ),
-                              CustomeCTAButton(
-
-                                ProgressColor: ColorManager.white,
-                                colorBorder: ColorManager.secondColor,
-                                haveBorder: false,
-                                textColor: ColorManager.white,
-                                trigger: value.loading,
-
-                                primary: ColorManager.primaryGreen,
-                                onPressed: () {
-                                  value.addAddressProvider();
-                                  // value. filterCars();
-                                  // value.editProfile();
-                                },
-                                title: "AddAddress",
-                                fontSized: 17.sp,
-                              )
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       );
                     },
@@ -301,7 +316,7 @@ class AddressScreen extends StatelessWidget {
                             ),
                           ),
                         )
-                   ],
+                      ],
                     ),
                   );
                 }

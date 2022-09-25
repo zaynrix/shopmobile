@@ -451,7 +451,9 @@ class ProfileProvider extends ChangeNotifier {
   }
 
   voidConfirmMethod() {
+
     if (formKey.currentState!.validate()) {
+
       show();
     } else {
       debugPrint("No");
@@ -469,6 +471,8 @@ class ProfileProvider extends ChangeNotifier {
     showDialog(
       context: productDetailsScaffoldKey.currentContext!,
       builder: (context) {
+        FocusScope.of(context).unfocus();
+
         return AlertDialog(
           title: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -512,9 +516,9 @@ class ProfileProvider extends ChangeNotifier {
               ),
               CustomeCTAButton(
                 trigger: false,
-                primary: ColorManager.primaryGreen.withOpacity(0.04),
+                primary: ColorManager.primaryGreen.withOpacity(1),
                 title: "Ok",
-                textColor: ColorManager.primaryGreen,
+                textColor: ColorManager.white,
                 onPressed: () {
                   sl<NavigationService>().navigateToAndRemove(rote.home);
                 },
@@ -558,6 +562,9 @@ class ProfileProvider extends ChangeNotifier {
 
   void AddressSheet() {
     showModalBottomSheet(
+      isScrollControlled: true,
+
+
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),

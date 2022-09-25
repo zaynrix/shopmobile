@@ -17,7 +17,6 @@ class HttpAuth {
       data: {"email": email, "password": password},
     );
 
-    // print(response.data);
     LoginResponse users = LoginResponse.fromJson(response.data);
     return users;
   }
