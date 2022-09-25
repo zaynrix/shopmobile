@@ -19,6 +19,7 @@ final  data  =sl<ProfileProvider>();
   Widget build(BuildContext context) {
 
     return Scaffold(
+      key: data.productDetailsScaffoldKey,
       backgroundColor: ColorManager.backgroundColor2,
       appBar:  CustomAppBar(
         backgroundColor: ColorManager.backgroundColor2,
