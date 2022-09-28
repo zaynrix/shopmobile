@@ -415,7 +415,7 @@ class SearchScreen extends StatelessWidget {
                           builder: (BuildContext context,
                               AsyncSnapshot<List<Sub>> snapshot) {
                             print(snapshot.data);
-                            return value.isInWishList == true &&
+                            return value.isInFavourite == true &&
                                     value.searchList.length == 0
                                 ? SingleChildScrollView(
                                     child: SkeletonMobileCardList(

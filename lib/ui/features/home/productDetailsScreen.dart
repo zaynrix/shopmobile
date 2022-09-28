@@ -11,7 +11,6 @@ import 'package:shopmobile/resources/color_manager.dart';
 import 'package:shopmobile/resources/font_manager.dart';
 import 'package:shopmobile/routing/navigation.dart';
 import 'package:shopmobile/routing/routes.dart';
-import 'package:shopmobile/ui/features/Profile/profileProvider.dart';
 import 'package:shopmobile/ui/features/cart/cartProvider.dart';
 import 'package:shopmobile/ui/features/home/homeProvider.dart';
 import 'package:shopmobile/ui/shared/widgets/CustomAppBar.dart';
@@ -35,7 +34,6 @@ class ProductDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<HomeProvider>(
       builder: (context, value, child) => Scaffold(
-        // key: sl<ProfileProvider>().productDetailsScaffoldKey,
         resizeToAvoidBottomInset: false,
         backgroundColor: ColorManager.white,
         appBar: CustomAppBar(

@@ -22,10 +22,10 @@ class CartProvider extends ChangeNotifier {
   bool implemnt = false;
   bool sockectException = false;
 
-  // late
   late bool emp = false;
   late int ext;
 
+  // Clicked delay
   bool isRedundentClick(DateTime currentTime, {int sec = 10}) {
     if (clickTime == null) {
       clickTime = currentTime;
@@ -34,18 +34,17 @@ class CartProvider extends ChangeNotifier {
     if (currentTime.difference(clickTime!).inSeconds < sec) {
       return true;
     }
-
     clickTime = currentTime;
-
     return false;
   }
 
+  // Cart Data
   void getCartProvider() async {
     try {
       cartModel.CartModel res = await sl<CartRepo>().getCartData();
-      cartLength = res.data!.cartItems!.length;
+      cartLength = res.data == null ? 0 : res.data!.cartItems!.length;
 
-      cartList = res.data!.cartItems!;
+      cartList = res.data == null ? cartList : res.data!.cartItems!;
       cartModelList = res;
       cartINIT = false;
       getSetCartTotal();
@@ -58,17 +57,12 @@ class CartProvider extends ChangeNotifier {
       notifyListeners();
       final errorMessage = DioExceptions.fromDioError(e).toString();
       AppConfig.showSnakBar("$errorMessage");
-
-      throw errorMessage;
     }
   }
 
+  // Add Cart
   addToCart({int? id}) async {
     if (cartList.length == 0) {
-      // cartLength =cartList.length+1;
-      // notifyListeners();
-
-      // implemnt =true;
       emp = true;
       notifyListeners();
     } else {
@@ -89,8 +83,8 @@ class CartProvider extends ChangeNotifier {
     if (implemnt == true || emp == true) {
       cartLength = cartLength + 1;
       notifyListeners();
-
       addCart.CartAddedModel res = await sl<CartRepo>().addCartData(id: id);
+
       if (res.status == true) {
         refreshCart();
         cartINIT = false;
@@ -105,6 +99,7 @@ class CartProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Delete Cart
   void deleteCartProvider({int? cartId, int? itemIndex}) async {
     UpdateCartModel res = await sl<CartRepo>().deleteCart(CartId: cartId);
     if (res.status == true) {
@@ -114,11 +109,11 @@ class CartProvider extends ChangeNotifier {
       sl<NavigationService>().pop();
       cartINIT = false;
       getSetCartTotal();
-
       notifyListeners();
     } else {}
   }
 
+  // Refresh Cart
   Future refreshCart() async {
     cartModelList = null;
     cartINIT = true;
@@ -127,6 +122,7 @@ class CartProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Total Price
   int getSetCartTotal() {
     cartTotal = 0;
     if (cartList.length > 0) {
@@ -140,6 +136,7 @@ class CartProvider extends ChangeNotifier {
     return cartTotal;
   }
 
+  // Increment
   void increment({required int itemIndex, int? cartId}) async {
     cartTotal = 0;
     int quantity = await ++cartModelList!.data!.cartItems![itemIndex].quantity;
@@ -160,10 +157,10 @@ class CartProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Decrement
   decrement({required int itemIndex, int? cartId}) async {
     if (cartModelList!.data!.cartItems![itemIndex].quantity <= 1) {
     } else {
-      //("this is cart item $cartId");
       cartTotal = 0;
       int quantity =
           await cartModelList!.data!.cartItems![itemIndex].quantity--;
@@ -177,9 +174,7 @@ class CartProvider extends ChangeNotifier {
         if (res.data!.total == getSetCartTotal()) {
           AppConfig.showSnakBar("${res.message}");
           notifyListeners();
-        } else {
-          // AppConfig.showSnakBar("Try Again");
-        }
+        } else {}
       } else {
         AppConfig.showSnakBar("${res.message}");
       }

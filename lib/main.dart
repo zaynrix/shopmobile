@@ -10,14 +10,12 @@ import 'package:shopmobile/resources/theme_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shopmobile/ui/features/home/homeProvider.dart';
-import 'package:shopmobile/ui/shared/pages/reConnect.dart';
+
 void main() async {
 
 
-  // print("This is $endpoints");
   WidgetsFlutterBinding.ensureInitialized();
   await init();
-
   await EasyLocalization.ensureInitialized();
   await ScreenUtil.ensureScreenSize();
 
@@ -32,7 +30,6 @@ void main() async {
         supportedLocales: const [
           Locale('en'),
           Locale('ar'),
-          // Locale('de'),
         ],
         path: 'assets/translations',
         startLocale: Locale("en"),

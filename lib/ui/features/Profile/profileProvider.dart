@@ -393,7 +393,7 @@ class ProfileProvider extends ChangeNotifier {
     sl<CategoryProvider>().subCategory.clear();
     sl<ExploreProvider>().topPrice.clear();
     sl<ExploreProvider>().mostViews.clear();
-    sl<FavouriteProvider>().favoriteDatanew!.clear();
+    sl<FavouriteProvider>().favoriteDataProvider!.clear();
     sl<HomeProvider>().banners.clear();
     sl<ProfileProvider>().address.clear();
     sl<ProfileProvider>().reAssignSetting();
@@ -707,38 +707,39 @@ class ProfileProvider extends ChangeNotifier {
         if (sl<SharedLocal>().getUser()!.token == "") {
           sl<NavigationService>().navigateTo(rote.login);
         } else {
-          showDialog(
-            context:
-                sl<ProfileProvider>().productDetailsScaffoldKey.currentContext!,
-            builder: (context) {
-              return AlertDialog(
-                title: Text('Logout'.tr()),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () {
-                      sl<NavigationService>().pop();
-                    },
-                    child: Text(
-                      'No'.tr(),
-                      style: TextStyle(color: ColorManager.lightGrey),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      sl<AuthProvider>().logoutProvider();
-                    },
-                    child: Text(
-                      'Logout'.tr(),
-                      style: TextStyle(
-                          color: sl<SharedLocal>().getUser()!.token != ""
-                              ? ColorManager.red
-                              : ColorManager.primaryGreen),
-                    ),
-                  ),
-                ],
-              );
-            },
-          );
+          sl<AuthProvider>().logoutProvider();
+          // showDialog(
+          //   context:
+          //       sl<ProfileProvider>().productDetailsScaffoldKey.currentContext!,
+          //   builder: (context) {
+          //     return AlertDialog(
+          //       title: Text('Logout'.tr()),
+          //       actions: <Widget>[
+          //         TextButton(
+          //           onPressed: () {
+          //             sl<NavigationService>().pop();
+          //           },
+          //           child: Text(
+          //             'No'.tr(),
+          //             style: TextStyle(color: ColorManager.lightGrey),
+          //           ),
+          //         ),
+          //         TextButton(
+          //           onPressed: () {
+          //             sl<AuthProvider>().logoutProvider();
+          //           },
+          //           child: Text(
+          //             'Logout'.tr(),
+          //             style: TextStyle(
+          //                 color: sl<SharedLocal>().getUser()!.token != ""
+          //                     ? ColorManager.red
+          //                     : ColorManager.primaryGreen),
+          //           ),
+          //         ),
+          //       ],
+          //     );
+          //   },
+          // );
         }
       },
       path: CustomSvgAssets(

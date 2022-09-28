@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:dio/dio.dart';
+import 'package:shopmobile/dio_exception.dart';
 import 'package:shopmobile/models/notificationsModel.dart';
 import 'package:shopmobile/routing/navigation.dart';
 import 'package:rxdart/rxdart.dart';
@@ -19,155 +21,110 @@ import 'package:collection/collection.dart';
 
 class HomeProvider extends ChangeNotifier {
   bool? changed = false;
-  int current = 0;
-  RangeValues rangeValues = RangeValues(20000, 30000);
+  bool isInFavourite = false;
+  bool notificationInit = true;
 
-  bool isInWishList = false;
-  bool notifficationINIT = true;
   productModel.Data? productDetails;
 
-  final controller = PageController(viewportFraction: 0.8, keepPage: true);
+  int current = 0;
+
+  // For Slider
+  RangeValues rangeValues = RangeValues(20000, 30000);
+
   final CarouselController carouselController = CarouselController();
   TextEditingController searchController = TextEditingController();
+  final controller = PageController(viewportFraction: 0.8, keepPage: true);
 
-// final pageStroeKey = PageStorageKey("HomeKey");
   List<Products> products = [];
   List<Sub> searchList = [];
   List<Sub> searchListInitial = [];
   List<Banners> banners = [];
   List<NotificationItem> notifications = [];
 
+  // Get Home
   void getHomeProvider() async {
-    //("Added Data");
     try {
-      searchProduct(tex: "Xiam");
       HomeResponse response = await sl<HomeRepo>().getHome();
-      if (response.status == true) {
-        banners = response.data!.banners!;
-        products = response.data!.products!;
-        notifyListeners();
-      } else {}
-    } catch (e) {
-      throw e;
+      banners = response.data!.banners!;
+      products = response.data!.products!;
+      notifyListeners();
+    } on DioError catch (e) {
+      final errorMessage = DioExceptions.fromDioError(e).toString();
+      AppConfig.showSnakBar("$errorMessage");
     }
   }
 
-  @override
-  void dispose() {
-    // sl<CartProvider>().cartList.clear();
-    // sl<CartProvider>().ext = 0;
-    // sl<CartProvider>().implemnt = false;
-    // sl<CartProvider>().cartModelList = null;
-    //
-    // sl<CategoryProvider>().category.clear();
-    // sl<CategoryProvider>().subCategory.clear();
-    // sl<ExploreProvider>().topPrice.clear();
-    // sl<ExploreProvider>().mostViews.clear();
-    // sl<FavouriteProvider>().favoriteDatanew!.clear();
-    // sl<HomeProvider>().banners.clear();
-    // sl<ProfileProvider>().address.clear();
-    // sl<HomeProvider>().products.clear();
-    // sl<HomeProvider>().searchList.clear();
-    // sl<HomeProvider>().controller.dispose();
-    // sl<HomeProvider>().searchController.dispose();
-    // sl<HomeProvider>().productDetails = null;
-    // sl<HomeProvider>().productDetails = null;// TODO: implement dispose
-
-    //  This is data
-    //  sl<CartProvider>().cartList;
-    //  sl<CartProvider>().ext ;
-    //  sl<CartProvider>().implemnt ;
-    //  sl<CartProvider>().cartModelList;
-    //
-    //  sl<CategoryProvider>().category;
-    //  sl<CategoryProvider>().subCategory;
-    //  sl<ExploreProvider>().topPrice;
-    //  sl<ExploreProvider>().mostViews;
-    //  sl<FavouriteProvider>().favoriteDatanew!;
-    //  sl<HomeProvider>().banners;
-    //  sl<ProfileProvider>().address;
-    //  sl<HomeProvider>().products;
-    //  sl<HomeProvider>().searchList;
-    //  sl<HomeProvider>().controller;
-    //  sl<HomeProvider>().searchController;
-    //  sl<HomeProvider>().productDetails;
-    //  sl<HomeProvider>().productDetails;// TODO: implement dispose
-    super.dispose();
-  }
-
+  // Get Notifications
   void getNotificationProvider() async {
     Notifications response = await sl<HomeRepo>().getNotifications();
-   try{
-
-
-
-    if (response.status == true) {
-      notifications = response.data!.notification!;
-      notifficationINIT = false;
+    try {
+      if (response.status == true) {
+        notifications = response.data!.notification!;
+        notificationInit = false;
+        notifyListeners();
+      }
+    } on DioError catch (e) {
+      notificationInit = true;
       notifyListeners();
+      final errorMessage = DioExceptions.fromDioError(e).toString();
+      AppConfig.showSnakBar("$errorMessage");
     }
-   }catch(e){
-     notifficationINIT = true;
-     notifyListeners();
-
-   }
   }
 
+  // Get Product Details
   void getProductDetails({int? id}) async {
-    productDetails = null;
-
-    productModel.ProductModel response =
-    await sl<HomeRepo>().productDetails(ProductId: id);
-
-    if (response.status == true) {
+    try {
+      productDetails = null;
+      productModel.ProductModel response =
+          await sl<HomeRepo>().productDetails(ProductId: id);
       productDetails = response.data!;
       notifyListeners();
-    } else {
+    } on DioError catch (e) {
+      final errorMessage = DioExceptions.fromDioError(e).toString();
+      AppConfig.showSnakBar("$errorMessage");
     }
   }
 
   void toggleFav({bool? isFav, int? x, id}) async {
     isFav = !isFav!;
-    isInWishList = isFav;
-    x != null ? products
-        .elementAt(x)
-        .inFavorites = isInWishList : 0;
-    productDetails?.inFavorites = isInWishList;
+    isInFavourite = isFav;
+    x != null ? products.elementAt(x).inFavorites = isInFavourite : 0;
+    productDetails?.inFavorites = isInFavourite;
     notifyListeners();
     products.forEach(
-          (element) {
-        id == element.id ? element.inFavorites = isInWishList : "";
+      (element) {
+        id == element.id ? element.inFavorites = isInFavourite : "";
         notifyListeners();
       },
     );
     sl<ExploreProvider>().topPrice.forEach(
-          (element) {
-        id == element.id ? element.inFavorites = isInWishList : "";
+      (element) {
+        id == element.id ? element.inFavorites = isInFavourite : "";
         notifyListeners();
       },
     );
     sl<ExploreProvider>().mostViews.forEach(
-          (element) {
-        id == element.id ? element.inFavorites = isInWishList : "";
+      (element) {
+        id == element.id ? element.inFavorites = isInFavourite : "";
         notifyListeners();
       },
     );
 
     sl<CategoryProvider>().subCategory.forEach(
-          (element) {
-        id == element.id ? element.inFavorites = isInWishList : "";
+      (element) {
+        id == element.id ? element.inFavorites = isInFavourite : "";
         notifyListeners();
       },
     );
     searchList.forEach(
-          (element) {
-        id == element.id ? element.inFavorites = isInWishList : "";
+      (element) {
+        id == element.id ? element.inFavorites = isInFavourite : "";
         notifyListeners();
       },
     );
     notifyListeners();
     faResponse.FavoriteCheck favoriteCheck =
-    await sl<FavouriteRepo>().removeFavoriteData(id);
+        await sl<FavouriteRepo>().removeFavoriteData(id);
 
     sl<FavouriteProvider>().updateFav();
     notifyListeners();
@@ -198,24 +155,21 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Generate Random Item
   List<Sub> randomLists(int n, List<Sub> source) => source.sample(n);
 
+  // Search
   Future searchProduct({String? tex}) async {
     CategoriesDetails response = await sl<HomeRepo>().searchData(tex: tex);
 
-    //(response.status);
-    if (response.status == true) {
+
       searchListInitial = randomLists(6, response.data!.sub!.reversed.toList());
 
       searchList = response.data!.sub!;
       notifyListeners();
-      // filter(searchController.text);
-      isInWishList = true;
+      isInFavourite = true;
 
       notifyListeners();
-    } else {
-      //("There is no data");
-    }
   }
 
   rangeChanged(RangeValues values) {
@@ -298,7 +252,7 @@ class HomeProvider extends ChangeNotifier {
   filter(String searchQuery) {
     List<Sub> filteredList = searchList
         .where((Sub user) =>
-        user.name!.toLowerCase().contains(searchQuery.toLowerCase()))
+            user.name!.toLowerCase().contains(searchQuery.toLowerCase()))
         .toList();
     streamController.sink.add(filteredList);
   }

@@ -1,77 +1,83 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shopmobile/data/favourite_repo.dart';
 import 'package:shopmobile/di.dart';
+import 'package:shopmobile/dio_exception.dart';
 import 'package:shopmobile/models/favoritesModel.dart';
 import 'package:shopmobile/models/favouriteModel.dart';
 import 'package:shopmobile/ui/features/category/categoryProvider.dart';
 import 'package:shopmobile/ui/features/explor/explorProvider.dart';
 import 'package:shopmobile/ui/features/home/homeProvider.dart';
+import 'package:shopmobile/utils/appConfig.dart';
 
 class FavouriteProvider extends ChangeNotifier {
   bool isFavourite = false;
   bool wishlistInit = true;
-  List<FavoriteData>? favoriteDatanew = [];
+  List<FavoriteData>? favoriteDataProvider = [];
   bool isInWishList = false;
 
-  FavouriteProvider() {
-
-  }
-
+  // Get Favourite
   void getFavoriteProvider() async {
-    Favorite res = await sl<FavouriteRepo>().getFavoriteData();
-    if (res.status == true) {
-      favoriteDatanew = res.data!.favoriteData;
-      // favoriteDatanew!.addAll(res.data!.favoriteData!);
+    try {
+      Favorite res = await sl<FavouriteRepo>().getFavoriteData();
+      favoriteDataProvider =
+          res.data == null ? favoriteDataProvider : res.data!.favoriteData;
       wishlistInit = false;
       notifyListeners();
-    } else {
-      //("There is no data");
+    } on DioError catch (e) {
+      final errorMessage = DioExceptions.fromDioError(e).toString();
+      AppConfig.showSnakBar("$errorMessage");
     }
   }
 
+  // Reset Favourite
   reset() {
     wishlistInit = true;
-    favoriteDatanew!.toSet();
+    favoriteDataProvider!.toSet();
     notifyListeners();
   }
 
+  // Refresh Favourite
   Future<void> onPageRefresh() async {
     reset();
     getFavoriteProvider();
   }
 
-  removeFromWishList(bool? isFav, id, id2, index) async {
-    FavoriteCheck res = await sl<FavouriteRepo>().removeFavoriteData(id);
-    isFav = !isFav!;
-    isInWishList = isFav;
-    favoriteDatanew!.removeAt(index);
+  removeFavourite(bool? isFav, id, id2, index) async {
+    try {
+      FavoriteCheck res = await sl<FavouriteRepo>().removeFavoriteData(id);
+      isFav = !isFav!;
+      isInWishList = isFav;
+      favoriteDataProvider!.removeAt(index);
 
-    if (res.status == true) {
-      //("Thisis true${favoriteDatanew!}");
-      //("this is product id $id ");
-      sl<HomeProvider>().products.forEach((element) {
-        id == element.id ? element.inFavorites = false : "";
+      if (res.status == true) {
+        sl<HomeProvider>().products.forEach((element) {
+          id == element.id ? element.inFavorites = false : "";
+          notifyListeners();
+        });
+        sl<ExploreProvider>().topPrice.forEach((element) {
+          id == element.id ? element.inFavorites = false : "";
+          notifyListeners();
+        });
+        sl<ExploreProvider>().mostViews.forEach((element) {
+          id == element.id ? element.inFavorites = false : "";
+          notifyListeners();
+        });
+        sl<CategoryProvider>().subCategory.forEach((element) {
+          id == element.id ? element.inFavorites = false : "";
+          notifyListeners();
+        });
+        updateFav();
         notifyListeners();
-      });
-      sl<ExploreProvider>().topPrice.forEach((element) {
-        id == element.id ? element.inFavorites = false : "";
-        notifyListeners();
-      });
-      sl<ExploreProvider>().mostViews.forEach((element) {
-        id == element.id ? element.inFavorites = false : "";
-        notifyListeners();
-      });
-      sl<CategoryProvider>().subCategory.forEach((element) {
-        id == element.id ? element.inFavorites = false : "";
-        notifyListeners();
-      });
-      updateFav();
-      notifyListeners();
-    } else {}
+      } else {}
+    } on DioError catch (e) {
+      final errorMessage = DioExceptions.fromDioError(e).toString();
+      AppConfig.showSnakBar("$errorMessage");
+    }
   }
 
+  // Update Favourite
   void updateFav() {
     getFavoriteProvider();
-    notifyListeners();
   }
 }

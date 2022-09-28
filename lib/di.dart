@@ -1,10 +1,7 @@
 import 'dart:async';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shopmobile/dio_interceptor.dart';
-import 'package:shopmobile/interceptors/dio_connectivity_request_retrier.dart';
-import 'package:shopmobile/interceptors/retry_interceptor.dart';
 import 'package:shopmobile/logger_interceptor.dart';
 import 'package:shopmobile/utils/storage.dart';
 import 'package:shopmobile/data/auth_repo.dart';
@@ -30,14 +27,7 @@ import 'package:shopmobile/ui/features/favorite/favoriteProvider.dart';
 final sl = GetIt.instance;
 
 Future<void> init() async {
-  // client.interceptors.add(
-  //   RetryOnConnectionChangeInterceptor(
-  //     requestRetrier: DioConnectivityRequestRetrier(
-  //       dio: client,
-  //       connectivity: Connectivity(),
-  //     ),
-  //   ),
-  // );
+
   sl.registerLazySingleton<HttpAuth>(() => HttpAuth(client: sl()));
   sl.registerLazySingleton<HomeRepo>(() => HomeRepo(client: sl()));
   sl.registerLazySingleton<FavouriteRepo>(() => FavouriteRepo(client: sl()));
@@ -74,21 +64,7 @@ Future<void> init() async {
   )..interceptors.addAll([
       DioInterceptor(),
       LoggerInterceptor(),
-    // RetryOnConnectionChangeInterceptor(
-    //   requestRetrier: DioConnectivityRequestRetrier(
-    //     dio: Dio(
-    //       BaseOptions(
-    //         receiveDataWhenStatusError: true,
-    //         connectTimeout: 50000,
-    //         receiveTimeout: 30000,
-    //         responseType: ResponseType.json,
-    //         baseUrl: '${ApiConstant.url}',
-    //         contentType: 'application/json',
-    //       ),
-    //     ),
-    //     connectivity: Connectivity(),
-    //   ),
-    // ),
+
     ]);
   sl.registerLazySingleton<Dio>(() => client);
 
@@ -103,23 +79,3 @@ Future<void> init() async {
   sl.registerLazySingleton(() => CategoryProvider());
 }
 
-// class CustomInterceptor extends Interceptor {
-//   @override
-//   void onRequest(
-//       RequestOptions options, RequestInterceptorHandler handler) async {
-//     print("onRequest");
-//     return super.onRequest(options, handler);
-//   }
-//
-//   @override
-//   Future? onResponse(Response response, ResponseInterceptorHandler handler) {
-//     print("onResponse");
-//     return null;
-//   }
-//
-//   @override
-//   Future onError(DioError err, ErrorInterceptorHandler handler) async {
-//     print("onError: ${err.response!.statusCode}");
-//     return handler.next(err); // <--- THE TIP IS HERE
-//   }
-// }

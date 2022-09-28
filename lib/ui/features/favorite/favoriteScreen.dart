@@ -39,18 +39,18 @@ class FavoriteScreen extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: value.wishlistInit == true &&
-                      value.favoriteDatanew!.length == 0
+                      value.favoriteDataProvider!.length == 0
                   ? SingleChildScrollView(
                       child: SkeletonMobileCardList(
                         itemCount: 10,
                       ),
                     )
-                  : value.favoriteDatanew!.length > 0
+                  : value.favoriteDataProvider!.length > 0
                       ? SingleChildScrollView(
                           child: GridView.builder(
                               shrinkWrap: true,
-                              itemCount: value.favoriteDatanew!.isNotEmpty
-                                  ? value.favoriteDatanew!.length
+                              itemCount: value.favoriteDataProvider!.isNotEmpty
+                                  ? value.favoriteDataProvider!.length
                                   : 6,
                               physics: NeverScrollableScrollPhysics(),
                               gridDelegate:
@@ -59,25 +59,25 @@ class FavoriteScreen extends StatelessWidget {
                               itemBuilder: (_, index) => CustomMobileCard(
                                   onTapDetails: () {
                                     print(
-                                        "${value.favoriteDatanew![index].product!.id}");
+                                        "${value.favoriteDataProvider![index].product!.id}");
                                     sl<NavigationService>()
                                         .navigateTo(productDetilas, args: [
-                                      value.favoriteDatanew![index].product!.id
+                                      value.favoriteDataProvider![index].product!.id
                                     ]);
                                   },
-                                  onTap: () => value.removeFromWishList(
+                                  onTap: () => value.removeFavourite(
                                       true,
-                                      value.favoriteDatanew![index].product!.id,
-                                      value.favoriteDatanew![index].id,
+                                      value.favoriteDataProvider![index].product!.id,
+                                      value.favoriteDataProvider![index].id,
                                       index),
                                   images: value
-                                      .favoriteDatanew![index].product!.image,
-                                  discount: value.favoriteDatanew![index]
+                                      .favoriteDataProvider![index].product!.image,
+                                  discount: value.favoriteDataProvider![index]
                                       .product!.discount,
                                   name: value
-                                      .favoriteDatanew![index].product!.name,
+                                      .favoriteDataProvider![index].product!.name,
                                   price: value
-                                      .favoriteDatanew![index].product!.price)),
+                                      .favoriteDataProvider![index].product!.price)),
                         )
                       : EmptyScreen(
                           path: ImageAssets.splashLogoSvg,

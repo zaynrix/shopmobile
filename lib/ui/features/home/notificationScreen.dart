@@ -57,7 +57,7 @@ class NotificationScreen extends StatelessWidget {
             horizontal: 25.w,
           ),
           child: Consumer<HomeProvider>(
-            builder: (context, data, child) => data.notifficationINIT == true &&
+            builder: (context, data, child) => data.notificationInit == true &&
                     data.notifications.length == 0
                 ? SingleChildScrollView(
                     child: ShimmerHelper().buildListShimmer(item_count: 10),
