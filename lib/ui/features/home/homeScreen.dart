@@ -16,7 +16,7 @@ import 'package:shopmobile/ui/shared/skeletonWidget/SkeletonMobileCard.dart';
 import 'package:shopmobile/ui/shared/widgets/CustomMobileCard.dart';
 import 'package:provider/provider.dart';
 
-final bucketGlobal = PageStorageBucket();
+// final bucketGlobal = PageStorageBucket();
 
 class Home extends StatelessWidget {
   Home() {
