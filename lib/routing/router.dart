@@ -90,16 +90,11 @@ class RouterX {
               ),
               ChangeNotifierProvider(
                 create: (context) => FavouriteProvider(),
-                // child:  PagesTestWidget(currentTab: settings.arguments as int),
               ),
             ],
             child: PagesTestWidget(currentTab: settings.arguments as int),
           ),
         );
-      // return MaterialPageRoute(
-      //   builder: (context) =>
-      //       PagesTestWidget(currentTab: settings.arguments as int),
-      // );
       case login:
         return MaterialPageRoute(
           builder: (_) => ChangeNotifierProvider(
