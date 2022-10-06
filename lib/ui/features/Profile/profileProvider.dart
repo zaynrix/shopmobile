@@ -378,12 +378,10 @@ class ProfileProvider extends ChangeNotifier {
 
   clearUserData() async {
     sl<SharedLocal>().removeUser();
-    // await  Restart.restartApp();
 
     await sl<Storage>().secureStorage.delete(key: SharedPrefsConstant.TOKEN);
     await sl<AppConfig>().deleteAppDir();
     await sl<AppConfig>().deleteCacheDir();
-    // await  sl<AppConfig>().c();
     sl<CartProvider>().cartList.clear();
     sl<CartProvider>().ext = 0;
     sl<CartProvider>().implemnt = false;
