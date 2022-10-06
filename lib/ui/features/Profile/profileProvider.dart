@@ -404,17 +404,6 @@ class ProfileProvider extends ChangeNotifier {
     // sl<HomeProvider>().se= null;
 
     notifyListeners();
-
-    // List<cartModel.CartItems> cartList = [];
-    // cartModel.CartModel? cartModelList;
-
-    // is_logged_in.value = false;
-    // access_token.value = "";
-    // user_id.value = 0;
-    // user_name.value = "";
-    // user_email.value = "";
-    // user_phone.value = "";
-    // avatar_original.value = "";
   }
 
   void changePasswordProvider() async {
