@@ -440,7 +440,6 @@ class ProfileProvider extends ChangeNotifier {
   voidConfirmMethod() {
 
     if (formKey.currentState!.validate()) {
-
       show();
     } else {
       debugPrint("No");
@@ -448,10 +447,8 @@ class ProfileProvider extends ChangeNotifier {
   }
 
   void reAssignSetting() {
-    // SettingItems.clear();
     SettingItems;
     notifyListeners();
-    // SettingItems
   }
 
   void show() {
