@@ -139,7 +139,6 @@ class ProfileRepo {
 }
 ''';
     Map<String, dynamic> jsonList = jsonDecode(response);
-
     ContactUs aboutUs = ContactUs.fromJson(jsonList);
     return aboutUs;
   }
