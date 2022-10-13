@@ -56,7 +56,6 @@ class ProfileRepo {
 
 
   // -------------------- Get FQA ----------------
-
   Future<FAQModel> getFAQ() async {
     Response response = await client!.get(
       '${ApiConstant.faqs}',
