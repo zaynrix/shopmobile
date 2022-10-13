@@ -375,10 +375,9 @@ class ProfileProvider extends ChangeNotifier {
       },
     );
   }
-
+ // -------------------- Remove All Data ----------------
   clearUserData() async {
     sl<SharedLocal>().removeUser();
-
     await sl<Storage>().secureStorage.delete(key: SharedPrefsConstant.TOKEN);
     await sl<AppConfig>().deleteAppDir();
     await sl<AppConfig>().deleteCacheDir();
@@ -386,7 +385,6 @@ class ProfileProvider extends ChangeNotifier {
     sl<CartProvider>().ext = 0;
     sl<CartProvider>().implemnt = false;
     sl<CartProvider>().cartModelList = null;
-
     sl<CategoryProvider>().category.clear();
     sl<CategoryProvider>().subCategory.clear();
     sl<ExploreProvider>().topPrice.clear();
@@ -401,7 +399,6 @@ class ProfileProvider extends ChangeNotifier {
     sl<HomeProvider>().searchController.dispose();
     sl<HomeProvider>().productDetails = null;
     sl<HomeProvider>().productDetails = null;
-    // sl<HomeProvider>().se= null;
 
     notifyListeners();
   }
