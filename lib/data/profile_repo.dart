@@ -146,7 +146,6 @@ class ProfileRepo {
 
   // -------------------- Add Address ----------------
   Future<AddressModel> addAddressRepo({Addres? addres}) async {
-
     Response response = await client!.post(
       '${ApiConstant.adress}',
       data: {
@@ -159,7 +158,6 @@ class ProfileRepo {
         "notes": addres.notes
       },
     );
-
     AddressModel users = AddressModel.fromJson(response.data);
     return users;
   }
