@@ -16,7 +16,6 @@ class ProfileRepo {
   ProfileRepo({this.client});
 
   // -------------------- Edit User Information ----------------
-
   Future<LoginResponse> editProfile(
       {String? name, String? phone, String? email, String? image}) async {
     Response response = await client!.put(
