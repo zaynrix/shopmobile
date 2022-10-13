@@ -46,7 +46,6 @@ class ProfileRepo {
 
 
   // -------------------- Get About Us ----------------
-
   Future<AboutUs> getAboutUs() async {
     Response response = await client!.get(
       '${ApiConstant.aboutUs}',
