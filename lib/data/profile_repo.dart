@@ -32,7 +32,6 @@ class ProfileRepo {
   }
 
   // -------------------- Get User Address ----------------
-
   Future<AddressModel> getAddress() async {
     var token =
         await sl<Storage>().secureStorage.read(key: SharedPrefsConstant.TOKEN);
