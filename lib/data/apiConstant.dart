@@ -1,4 +1,8 @@
 class ApiConstant {
+
+
+  // -------------------- Set value True when use another API ----------------
+
   static bool SoftTagi = false;
 
   static String url = SoftTagi

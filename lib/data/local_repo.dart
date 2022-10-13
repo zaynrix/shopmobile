@@ -8,11 +8,17 @@ class SharedLocal {
 
   SharedLocal({required this.sharedPreferences});
 
+
+  // -------------------- Save User ----------------
+
   Future<bool> setUser(User user) async {
     String userJson = jsonEncode(user);
     return await sharedPreferences.setString(
         SharedPrefsConstant.USER, userJson);
   }
+
+
+  // -------------------- Read User ----------------
 
   User? getUser() {
     String? user = sharedPreferences.getString(SharedPrefsConstant.USER);
@@ -32,12 +38,17 @@ class SharedLocal {
         token: "");
   }
 
+
+  // -------------------- Save Email ----------------
+
   Future<bool> setSignUpTempo(String emailUptempo) async {
     String userJson = jsonEncode(emailUptempo);
     return await sharedPreferences.setString(
         SharedPrefsConstant.phoneUptempo, userJson);
   }
 
+
+  // -------------------- Read Email ----------------
 
   String? getSignUpTempo() {
     String? user =
@@ -50,12 +61,23 @@ class SharedLocal {
     return null;
   }
 
+
+  // -------------------- Delete User ----------------
+
   void removeUser() {
     sharedPreferences.remove(SharedPrefsConstant.USER);
   }
 
+  // -------------------- First Intro ----------------
+
   bool get firstIntro =>
       sharedPreferences.getBool(SharedPrefsConstant.firstIntroKey) ?? false;
+
+
+  set firstIntro(bool value) {
+    sharedPreferences.setBool(SharedPrefsConstant.firstIntroKey, value);
+  }
+  // -------------------- Language ----------------
 
   int get getIndexLang =>
       sharedPreferences.getInt(SharedPrefsConstant.langIndex) ?? 1;
@@ -63,9 +85,6 @@ class SharedLocal {
   String get getLanguage =>
       sharedPreferences.getString(SharedPrefsConstant.langCode) ?? "en";
 
-  set firstIntro(bool value) {
-    sharedPreferences.setBool(SharedPrefsConstant.firstIntroKey, value);
-  }
 
   set setLanguage(String langCode) {
     sharedPreferences.setString(SharedPrefsConstant.langCode, langCode);
@@ -75,6 +94,9 @@ class SharedLocal {
     sharedPreferences.setInt(SharedPrefsConstant.langIndex, langIndex);
   }
 }
+
+
+// -------------------- Key Constants ----------------
 
 class SharedPrefsConstant {
   static const String USER = 'user';

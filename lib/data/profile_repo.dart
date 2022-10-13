@@ -1,26 +1,24 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
-import 'package:shopmobile/data/apiConstant.dart';
-import 'package:shopmobile/data/local_repo.dart';
 import 'package:shopmobile/di.dart';
+import 'package:shopmobile/models/user.dart';
+import 'package:shopmobile/utils/storage.dart';
+import 'package:shopmobile/models/faqModel.dart';
+import 'package:shopmobile/data/local_repo.dart';
+import 'package:shopmobile/data/apiConstant.dart';
 import 'package:shopmobile/models/aboutUsModel.dart';
 import 'package:shopmobile/models/addressModel.dart';
 import 'package:shopmobile/models/contactUsModel.dart';
-import 'package:shopmobile/models/faqModel.dart';
-import 'package:shopmobile/models/user.dart';
-import 'package:shopmobile/utils/storage.dart';
 
 class ProfileRepo {
   final Dio? client;
 
   ProfileRepo({this.client});
 
+  // -------------------- Edit User Information ----------------
+
   Future<LoginResponse> editProfile(
       {String? name, String? phone, String? email, String? image}) async {
-    // print
-    var token =
-        await sl<Storage>().secureStorage.read(key: SharedPrefsConstant.TOKEN);
     Response response = await client!.put(
       '${ApiConstant.updateProfile}',
       data: {
@@ -29,63 +27,49 @@ class ProfileRepo {
         "email": "$email",
         "image": "$image",
       },
-      // options: Options(
-      //   headers: <String, String>{
-      //     "Authorization": "$token",
-      //     "lang": "${sl<SharedLocal>().getLanguage}",
-      //   },
-      // ),
     );
-    print("This is  resps ${response.data}");
-    print("This is  respsBod ${response.statusCode}");
-
     LoginResponse users = LoginResponse.fromJson(response.data);
     return users;
   }
+
+  // -------------------- Get User Address ----------------
 
   Future<AddressModel> getAddress() async {
     var token =
         await sl<Storage>().secureStorage.read(key: SharedPrefsConstant.TOKEN);
     print("This is ${token}");
 
-    Response response = await client!.get('${ApiConstant.adress}',
-        // options: Options(
-        //   headers: <String, String>{
-        //     "lang": "${sl<SharedLocal>().getLanguage}",
-        //     "Authorization": "$token"
-        //   },
-        // )
+    Response response = await client!.get(
+      '${ApiConstant.adress}',
     );
     AddressModel addressModel = AddressModel.fromJson(response.data);
     return addressModel;
   }
 
-  Future<AboutUs> getAboutUs() async {
-    // var token =
-    //     await sl<Storage>().secureStorage.read(key: SharedPrefsConstant.TOKEN);
-    // print("This is ${token}");
 
-    Response response = await client!.get('${ApiConstant.aboutUs}',
-        // options: Options(
-        //   headers: <String, String>{"lang": "${sl<SharedLocal>().getLanguage}"},
-        // )
+  // -------------------- Get About Us ----------------
+
+  Future<AboutUs> getAboutUs() async {
+    Response response = await client!.get(
+      '${ApiConstant.aboutUs}',
     );
     AboutUs aboutUs = AboutUs.fromJson(response.data);
     return aboutUs;
   }
-  Future<FAQModel> getFAQ() async {
-    // var token =
-    // await sl<Storage>().secureStorage.read(key: SharedPrefsConstant.TOKEN);
-    // print("This is ${token}");
 
-    Response response = await client!.get('${ApiConstant.faqs}',
-        // options: Options(
-        //   headers: <String, String>{"lang": "${sl<SharedLocal>().getLanguage}"},
-        // )
+
+  // -------------------- Get FQA ----------------
+
+  Future<FAQModel> getFAQ() async {
+    Response response = await client!.get(
+      '${ApiConstant.faqs}',
     );
     FAQModel faqModel = FAQModel.fromJson(response.data);
     return faqModel;
   }
+
+
+  // -------------------- Get Contact Us ----------------
 
   Future<ContactUs> getContactUs() async {
     final response = '''
@@ -165,30 +149,23 @@ class ProfileRepo {
     return aboutUs;
   }
 
-  Future<AddressModel> addAddressRepo({Addres? addres}) async {
-    // var token =
-    //     await sl<Storage>().secureStorage.read(key: SharedPrefsConstant.TOKEN);
-    // print("This is ${token}");
 
-    Response response = await client!.post('${ApiConstant.adress}',
-        data: {
-          "name": addres!.name,
-          "city": addres.city,
-          "region": addres.region,
-          "details": addres.details,
-          "latitude": addres.latitude,
-          "longitude": addres.longitude,
-          "notes": addres.notes
-        },
-        // options: Options(
-        //   headers: <String, String>{
-        //     "lang": "${sl<SharedLocal>().getLanguage}",
-        //     "Authorization": "$token"
-        //   },
-        // ),
+  // -------------------- Add Address ----------------
+
+  Future<AddressModel> addAddressRepo({Addres? addres}) async {
+
+    Response response = await client!.post(
+      '${ApiConstant.adress}',
+      data: {
+        "name": addres!.name,
+        "city": addres.city,
+        "region": addres.region,
+        "details": addres.details,
+        "latitude": addres.latitude,
+        "longitude": addres.longitude,
+        "notes": addres.notes
+      },
     );
-    // print("This is  resps ${response.data}");
-    // print("This is  respsBod ${response.statusCode}");
 
     AddressModel users = AddressModel.fromJson(response.data);
     return users;

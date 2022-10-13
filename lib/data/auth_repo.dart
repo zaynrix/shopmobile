@@ -11,6 +11,9 @@ class HttpAuth {
 
   HttpAuth({required this.client});
 
+
+  // -------------------- Login Repository ----------------
+
   Future<LoginResponse> loginRepo({String? email, String? password}) async {
     Response response = await client.post(
       '${ApiConstant.authLogin}',
@@ -20,6 +23,9 @@ class HttpAuth {
     LoginResponse users = LoginResponse.fromJson(response.data);
     return users;
   }
+
+
+  // -------------------- Signup Repository ----------------
 
   Future<LoginResponse> SignupRepo({User? user}) async {
     print(user!.name);
@@ -34,11 +40,12 @@ class HttpAuth {
       },
     );
 
-    // print("This is  realUri ${response.realUri}");
-    // print("This is  respsBod ${response.statusCode}");
     LoginResponse users = LoginResponse.fromJson(response.data);
     return users;
   }
+
+
+  // -------------------- OTP Code ----------------
 
   Future<LoginResponse> sendOTP({
     String? phone,
@@ -58,6 +65,9 @@ class HttpAuth {
     return users;
   }
 
+
+  // -------------------- Re-OTP Code ----------------
+
   Future<LoginResponse> reSendOTP({
     String? phone,
   }) async {
@@ -71,6 +81,9 @@ class HttpAuth {
     return users;
   }
 
+
+  // -------------------- Forget Password ----------------
+
   Future<LoginResponse> forgetRepo({String? email}) async {
     Response response = await client
         .post('${ApiConstant.forgetPassword}', data: {"email": email});
@@ -78,6 +91,9 @@ class HttpAuth {
     LoginResponse users = LoginResponse.fromJson(response.data);
     return users;
   }
+
+
+  // -------------------- Confirm Code OTP ----------------
 
   Future<LoginResponse> confirmCodeRepo({String? email, String? otp}) async {
     print("Forget");
@@ -88,16 +104,17 @@ class HttpAuth {
         "email": "$email",
       },
     );
-    // print("This is  resps ${response.data}");
 
     LoginResponse users = LoginResponse.fromJson(response.data);
     return users;
   }
 
+
+  // -------------------- Logout ----------------
+
   Future<LogoutModel> logout({String? email, String? otp}) async {
     var token =
         await sl<Storage>().secureStorage.read(key: SharedPrefsConstant.TOKEN);
-    // print("This is logout token $token");
     Response response = await client.post('${ApiConstant.logout}',
         options: Options(
           headers: <String, String>{
@@ -105,11 +122,13 @@ class HttpAuth {
             "lang": "${sl<SharedLocal>().getLanguage}",
           },
         ));
-    // print("This is  resps ${response.data}");
 
     LogoutModel logoutModel = LogoutModel.fromJson(response.data);
     return logoutModel;
   }
+
+
+  // -------------------- Change Password Repository ----------------
 
   Future<LoginResponse> changePassword(
       {String? currentPassword, String? newPassword}) async {
@@ -128,8 +147,6 @@ class HttpAuth {
         },
       ),
     );
-    // print("This is  resps ${response.data}");
-    // print("This is  respsBod ${response.statusCode}");
 
     LoginResponse users = LoginResponse.fromJson(response.data);
     return users;

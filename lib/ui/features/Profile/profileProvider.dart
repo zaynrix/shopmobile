@@ -375,6 +375,7 @@ class ProfileProvider extends ChangeNotifier {
       },
     );
   }
+
  // -------------------- Remove All Data ----------------
   clearUserData() async {
     sl<SharedLocal>().removeUser();

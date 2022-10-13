@@ -1,5 +1,9 @@
 import 'dart:io';
 
+
+// -------------------- Lookup but not Used Yet ----------------
+
+
 class CheckInternet {
   Future<bool> checkInternet() async {
     bool connection = false;
