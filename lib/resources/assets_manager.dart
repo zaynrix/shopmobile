@@ -45,7 +45,6 @@ class IconAssets{
   static const String cameraFill='$ICONS_PATH/bi_camera-fill.svg';
   static const String hertOutlined='$ICON_PATHLight/Heart.svg';
   static const String notification='$ICON_PATHLight/Notification.svg';
-  // static const String hertFill='$ICON_PATHBold/Heart.svg';
   static const String hertSelected='$ICON_PATHLight/HeartFill.svg';
   static const String StarFill='$ICON_PATHBold/Star.svg';
   static const String Category='$ICON_PATHBold/Category.svg';
