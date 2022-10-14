@@ -3,7 +3,6 @@ import 'package:logger/logger.dart';
 
 class LoggerInterceptor extends Interceptor {
   Logger logger = Logger(
-    // Customize the printer
     printer: PrettyPrinter(
       methodCount: 0,
       printTime: false,
@@ -25,6 +24,8 @@ class LoggerInterceptor extends Interceptor {
     logger.i('${options.method} request => $requestPath'); // Info log
     return super.onRequest(options, handler);
   }
+
+
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
