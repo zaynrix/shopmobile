@@ -16,10 +16,12 @@ class ImageAssets {
   static const String detailsBackgoung = "$IMAGE_PATH/detailsBackgoung.svg";
 }
 
+
 const String ICON_PATHLight='assets/icons/Light';
 const String ICON_PATHBold='assets/icons/Bold';
 const String ICON_PATHColored='assets/icons/Colored';
 const String ICON_PATHbasic='assets/icons/basic';
+
 
 class IconAssets{
   static const String arrowRight='$ICON_PATHLight/ArrowRight2.svg';
