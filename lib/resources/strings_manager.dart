@@ -16,6 +16,5 @@ class Endpoints {
 
   // connectTimeout
   static const int connectionTimeout = 15000;
-
   static const String users = '/users';
 }
