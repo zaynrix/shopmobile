@@ -22,7 +22,7 @@ class LoggerInterceptor extends Interceptor {
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     final requestPath = '${options.baseUrl}${options.path}';
     logger.i('${options.method} request => $requestPath'); // Info log
-    return super.onRequest(options, handler);
+    return super.onRequest(options,  handler);
   }
 
 
