@@ -19,7 +19,7 @@ import 'package:provider/provider.dart';
 class AddressScreen extends StatelessWidget {
   AddressScreen() {
     sl<ProfileProvider>().getAddressProvider();
-    sl<ProfileProvider>().getLocationAttitude();
+    // sl<ProfileProvider>().getLocationAttitude();
   }
 
   @override

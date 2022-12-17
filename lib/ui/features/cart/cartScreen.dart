@@ -46,143 +46,128 @@ class Cart extends StatelessWidget {
               )
             : null,
         backgroundColor: ColorManager.backgroundColor,
-        body: OfflineBuilder(
-          connectivityBuilder: (
-            BuildContext context,
-            ConnectivityResult connectivity,
-            Widget child,
-          ) {
-            if (connectivity == ConnectivityResult.none) {
-              return NetworkDisconnected(onPress: () {
-                // sl<HomeProvider>().getHomeProvider();
-              });
-            } else {
-              return child;
-            }
+        body: RefreshIndicator(
+          onRefresh: () async {
+            await value.refreshCart();
           },
-          child: RefreshIndicator(
-            onRefresh: () async {
-              await value.refreshCart();
-            },
-            child: value.cartINIT == true && value.cartList.length == 0
-                ? SingleChildScrollView(
-                    child: ShimmerHelper().buildListShimmer(item_count: 10),
-                  )
-                : value.cartList.length > 0
-                    ? Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Expanded(
-                            child: ListView.separated(
-                                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                                shrinkWrap: true,
-                                separatorBuilder: (context, index) => SizedBox(
-                                      height: 16.h,
-                                    ),
-                                itemCount: value.cartList.length,
-                                itemBuilder: (context, index) => InkWell(
-                                    onTap: () {
-                                      sl<NavigationService>()
-                                          .navigateTo(productDetilas, args: [
-                                        value.cartList[index].product!.id
-                                      ]);
-                                    },
-                                    child: CustomCart(index: index))),
-                          ),
-                          // Spacer(),
-                          Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.03),
-                                    offset: Offset(0, -10.0),
-                                    blurRadius: 14.0,
-                                    spreadRadius: 0.0,
+          child: value.cartINIT == true && value.cartList.length == 0
+              ? SingleChildScrollView(
+                  child: ShimmerHelper().buildListShimmer(item_count: 10),
+                )
+              : value.cartList.length > 0
+                  ? Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Expanded(
+                          child: ListView.separated(
+                              padding: EdgeInsets.symmetric(horizontal: 20.w),
+                              shrinkWrap: true,
+                              separatorBuilder: (context, index) => SizedBox(
+                                    height: 16.h,
                                   ),
-                                ],
-                                color: ColorManager.white,
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(12.r),
-                                    topRight: Radius.circular(12.r))),
-                            child: SafeArea(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  CustomListTile(
-                                    title: "Subtotal",
-                                    trail:
-                                        "${value.cartModelList == null ? 00 : value.cartTotal} AED",
-                                  ),
-                                  CustomListTile(
-                                    title: "Discount",
-                                    trail: "30%",
-                                  ),
-                                  CustomListTile(
-                                    color: ColorManager.primaryGreen,
-                                    title: "Shipping",
-                                    trail: "-\$11.00",
-                                    trailColor: ColorManager.primaryGreen,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 25.0),
-                                    child: MySeparator(color: Colors.grey),
-                                  ),
-                                  ListTile(
-                                    title: Text(
-                                      "Total".tr(),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline3!
-                                          .copyWith(
-                                              color: ColorManager.black,
-                                              fontWeight:
-                                                  FontWeightManager.semiBold),
-                                    ),
-                                    trailing: Text(
+                              itemCount: value.cartList.length,
+                              itemBuilder: (context, index) => InkWell(
+                                  onTap: () {
+                                    sl<NavigationService>()
+                                        .navigateTo(productDetilas, args: [
+                                      value.cartList[index].product!.id
+                                    ]);
+                                  },
+                                  child: CustomCart(index: index))),
+                        ),
+                        // Spacer(),
+                        Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.03),
+                                  offset: Offset(0, -10.0),
+                                  blurRadius: 14.0,
+                                  spreadRadius: 0.0,
+                                ),
+                              ],
+                              color: ColorManager.white,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(12.r),
+                                  topRight: Radius.circular(12.r))),
+                          child: SafeArea(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                CustomListTile(
+                                  title: "Subtotal",
+                                  trail:
                                       "${value.cartModelList == null ? 00 : value.cartTotal} AED",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline3!
-                                          .copyWith(
-                                              color: ColorManager.black,
-                                              fontWeight:
-                                                  FontWeightManager.semiBold),
-                                    ),
+                                ),
+                                CustomListTile(
+                                  title: "Discount",
+                                  trail: "30%",
+                                ),
+                                CustomListTile(
+                                  color: ColorManager.primaryGreen,
+                                  title: "Shipping",
+                                  trail: "-\$11.00",
+                                  trailColor: ColorManager.primaryGreen,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 25.0),
+                                  child: MySeparator(color: Colors.grey),
+                                ),
+                                ListTile(
+                                  title: Text(
+                                    "Total".tr(),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline3!
+                                        .copyWith(
+                                            color: ColorManager.black,
+                                            fontWeight:
+                                                FontWeightManager.semiBold),
                                   ),
-                                  SizedBox(
-                                    height: 15.h,
+                                  trailing: Text(
+                                    "${value.cartModelList == null ? 00 : value.cartTotal} AED",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline3!
+                                        .copyWith(
+                                            color: ColorManager.black,
+                                            fontWeight:
+                                                FontWeightManager.semiBold),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 25),
-                                    child: CustomeCTAButton(
-                                      trigger: false,
-                                      primary: ColorManager.secondryBlack,
-                                      onPressed: () {
-                                        sl<NavigationService>()
-                                            .navigateTo(paymentMethodScreen);
-                                      },
-                                      title: "Proceedcheckout",
-                                    ),
+                                ),
+                                SizedBox(
+                                  height: 15.h,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 25),
+                                  child: CustomeCTAButton(
+                                    trigger: false,
+                                    primary: ColorManager.secondryBlack,
+                                    onPressed: () {
+                                      sl<NavigationService>()
+                                          .navigateTo(paymentMethodScreen);
+                                    },
+                                    title: "Proceedcheckout",
                                   ),
-                                  SizedBox(
-                                    height: 15.h,
-                                  ),
-                                ],
-                              ),
+                                ),
+                                SizedBox(
+                                  height: 15.h,
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      )
-                    : EmptyScreen(
-                        path: ImageAssets.splashLogoSvg,
-                        title: "Your Cart is Empty",
-                        subtitle: "Looks_like_cart",
-                      ),
-          ),
+                        ),
+                      ],
+                    )
+                  : EmptyScreen(
+                      path: ImageAssets.splashLogoSvg,
+                      title: "Your Cart is Empty",
+                      subtitle: "Looks_like_cart",
+                    ),
         ),
       ),
     );

@@ -28,137 +28,122 @@ class Home extends StatelessWidget {
     return Scaffold(
       extendBody: true,
       backgroundColor: ColorManager.backgroundColor,
-      body: OfflineBuilder(
-        connectivityBuilder: (
-            BuildContext context,
-            ConnectivityResult connectivity,
-            Widget child,
-            ) {
-          if (connectivity == ConnectivityResult.none) {
-            return NetworkDisconnected(onPress: (){
-              sl<HomeProvider>().getHomeProvider();
-            });
-          } else {
-            return child;
-          }
-        },
-        child: Consumer2<HomeProvider, FavouriteProvider>(
-          builder: (context, value, value2, child) => RefreshIndicator(
-            color: ColorManager.primaryGreen,
-            onRefresh: () async {
-              await value.refreshHome();
-            },
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Column(
-                  children: [
-                    Container(
-                      child: CarouselSlider(
-                        options: CarouselOptions(
-                          enlargeCenterPage: true,
-                          pageSnapping: true,
-                          autoPlay: true,
-                        ),
-                        items: value.banners
-                            .map(
-                              (item) => Center(
-                                child: ClipRRect(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10.0)),
-                                  child: AspectRatio(
-                                    aspectRatio: 3 / 2,
-                                    child: CachedNetworkImage(
-                                      // color: Colors.red,
-                                      fit: BoxFit.fitHeight,
-                                      placeholder: (context, url) => Center(
-                                          child:
-                                              const CircularProgressIndicator()),
-                                      imageUrl: "${item.image}",
-                                    ),
+      body: Consumer2<HomeProvider, FavouriteProvider>(
+        builder: (context, value, value2, child) => RefreshIndicator(
+          color: ColorManager.primaryGreen,
+          onRefresh: () async {
+            await value.refreshHome();
+          },
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              child: Column(
+                children: [
+                  Container(
+                    child: CarouselSlider(
+                      options: CarouselOptions(
+                        enlargeCenterPage: true,
+                        pageSnapping: true,
+                        autoPlay: true,
+                      ),
+                      items: value.banners
+                          .map(
+                            (item) => Center(
+                              child: ClipRRect(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0)),
+                                child: AspectRatio(
+                                  aspectRatio: 3 / 2,
+                                  child: CachedNetworkImage(
+                                    // color: Colors.red,
+                                    fit: BoxFit.fitHeight,
+                                    placeholder: (context, url) => Center(
+                                        child:
+                                            const CircularProgressIndicator()),
+                                    imageUrl: "${item.image}",
                                   ),
                                 ),
                               ),
-                            )
-                            .toList(),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 28.h,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "PopularItem".tr(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline3!
+                            .copyWith(fontWeight: FontWeight.bold),
                       ),
-                    ),
-                    SizedBox(
-                      height: 28.h,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "PopularItem".tr(),
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline3!
-                              .copyWith(fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          "SeeAll".tr(),
-                          style: Theme.of(context)
-                              .textTheme
-                              .subtitle1!
-                              .copyWith(color: ColorManager.primaryGreen),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 16.h,
-                    ),
-                    Flex(
-                      direction: Axis.horizontal,
-                      children: [
-                        Expanded(
-                          child: GridView.builder(
-                              key: PageStorageKey<String>('one'),
-                              shrinkWrap: true,
-                              itemCount: value.products.isNotEmpty
-                                  ? value.products.length
-                                  : 6,
-                              physics: NeverScrollableScrollPhysics(),
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                      childAspectRatio: 0.6, crossAxisCount: 2),
-                              itemBuilder: (_, index) => value.products.isNotEmpty
-                                  ? CustomMobileCard(
-                                      onTapDetails: () {
-                                        print("${value.products[index].id}");
-                                        // value.getProductDetails(
-                                        //     id: value.products[index].id);
-                                        sl<NavigationService>().navigateTo(
-                                            productDetilas,
-                                            args: [value.products[index].id]);
-                                      },
-                                      onTap: () {
-                                        if (sl<CartProvider>()
-                                            .isRedundentClick(DateTime.now())) {
-                                          value.toggleFav(
-                                            isFav:
-                                                value.products[index].inFavorites,
-                                            x: index,
-                                            id: value.products[index].id,
-                                          );
-                                          print('hold on, processing');
-                                          return;
-                                        }
-                                        print('run process');
-                                      },
-                                      inFavorites:
-                                          value.products[index].inFavorites,
-                                      images: value.products[index].image,
-                                      discount: value.products[index].discount,
-                                      name: value.products[index].name,
-                                      price: value.products[index].price,
-                                    )
-                                  : SkeletonMobileCard()),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
+                      Text(
+                        "SeeAll".tr(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle1!
+                            .copyWith(color: ColorManager.primaryGreen),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 16.h,
+                  ),
+                  Flex(
+                    direction: Axis.horizontal,
+                    children: [
+                      Expanded(
+                        child: GridView.builder(
+                            key: PageStorageKey<String>('one'),
+                            shrinkWrap: true,
+                            itemCount: value.products.isNotEmpty
+                                ? value.products.length
+                                : 6,
+                            physics: NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    childAspectRatio: 0.6, crossAxisCount: 2),
+                            itemBuilder: (_, index) => value.products.isNotEmpty
+                                ? CustomMobileCard(
+                                    onTapDetails: () {
+                                      print("${value.products[index].id}");
+                                      // value.getProductDetails(
+                                      //     id: value.products[index].id);
+                                      sl<NavigationService>().navigateTo(
+                                          productDetilas,
+                                          args: [value.products[index].id]);
+                                    },
+                                    onTap: () {
+                                      if (sl<CartProvider>()
+                                          .isRedundentClick(DateTime.now())) {
+                                        value.toggleFav(
+                                          isFav:
+                                              value.products[index].inFavorites,
+                                          x: index,
+                                          id: value.products[index].id,
+                                        );
+                                        print('hold on, processing');
+                                        return;
+                                      }
+                                      print('run process');
+                                    },
+                                    inFavorites:
+                                        value.products[index].inFavorites,
+                                    images: value.products[index].image,
+                                    discount: value.products[index].discount,
+                                    name: value.products[index].name,
+                                    price: value.products[index].price,
+                                  )
+                                : SkeletonMobileCard()),
+                      ),
+                    ],
+                  )
+                ],
               ),
             ),
           ),

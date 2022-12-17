@@ -186,15 +186,15 @@ class ProfileProvider extends ChangeNotifier {
     }
   }
 
-  void getLocationAttitude() async {
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-    long = position.longitude;
-    lat = position.latitude;
-    notifyListeners();
-
-    // ("This is long :$long - lat:$lat");
-  }
+  // void getLocationAttitude() async {
+  //   Position position = await Geolocator.getCurrentPosition(
+  //       desiredAccuracy: LocationAccuracy.high);
+  //   long = position.longitude;
+  //   lat = position.latitude;
+  //   notifyListeners();
+  //
+  //   // ("This is long :$long - lat:$lat");
+  // }
 
   void getAddressProvider() async {
     ("Added Data");
@@ -276,8 +276,8 @@ class ProfileProvider extends ChangeNotifier {
         details: addressDetails.text,
         region: addressRegion.text,
         notes: addressNotes.text,
-        latitude: lat ?? 000000,
-        longitude: long ?? 000000);
+        latitude:  000000,
+        longitude:  000000);
     AddressModel response =
         await sl<ProfileRepo>().addAddressRepo(addres: addres);
     // ("This is response ${response.hashCode}");
