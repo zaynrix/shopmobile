@@ -18,6 +18,7 @@ class DioInterceptor extends Interceptor {
 
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
+    print("${err.message}");
     super.onError(err, handler);
   }
 }

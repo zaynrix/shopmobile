@@ -107,9 +107,7 @@ class AuthProvider extends ChangeNotifier {
         loading = false;
         notifyListeners();
 
-        // sl<SharedLocal>().setSignUpTempo("$selectedLocation${phone.text}");
         AppConfig.showSnakBar("${res.message??"Account was created Successfully!!"}");
-        // sl<NavigationService>().navigateToAndRemove(otp);
         sl<NavigationService>().navigateToAndRemove(login);
       } else {
         loading = false;

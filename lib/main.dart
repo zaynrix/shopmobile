@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:shopmobile/di.dart';
 import 'package:flutter/material.dart';
@@ -9,10 +11,13 @@ import 'package:shopmobile/routing/navigation.dart';
 import 'package:shopmobile/resources/theme_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shopmobile/ui/features/chat/app.dart';
 import 'package:shopmobile/ui/features/home/homeProvider.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
 void main() async {
 
+  var client = StreamChatClient(apiKey);
 
   WidgetsFlutterBinding.ensureInitialized();
   await init();
@@ -34,13 +39,17 @@ void main() async {
         path: 'assets/translations',
         startLocale: Locale("en"),
         fallbackLocale: const Locale("en"),
-        child: MyApp(),
+        child: MyApp(
+          streamChatClient: client,
+        ),
       ),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
+  MyApp({required this.streamChatClient});
+  StreamChatClient streamChatClient;
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +59,11 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (context, child) {
         return MaterialApp(
+          builder: (context, child) {
+            return StreamChat(
+                client: streamChatClient,
+                child: ChannelsBloc(child: UsersBloc(child: child!)));
+          },
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
           locale: context.locale,

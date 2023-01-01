@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:geolocator/geolocator.dart';
+// import 'package:geolocator/geolocator.dart';
 import 'package:shopmobile/data/auth_repo.dart';
 import 'package:shopmobile/data/local_repo.dart';
 import 'package:shopmobile/di.dart';
@@ -108,8 +108,8 @@ class ProfileProvider extends ChangeNotifier {
     getFAQProvider();
     getAboutUsProvider();
     getContactUsProvider();
-    checkGPSEnabeld();
-    checkLocationPermission();
+    // checkGPSEnabeld();
+    // checkLocationPermission();
     listenController();
   }
 
@@ -515,32 +515,32 @@ class ProfileProvider extends ChangeNotifier {
     );
   }
 
-  void checkGPSEnabeld() async {
-    bool servicestatus = await Geolocator.isLocationServiceEnabled();
+  // void checkGPSEnabeld() async {
+  //   bool servicestatus = await Geolocator.isLocationServiceEnabled();
+  //
+  //   if (servicestatus) {
+  //     ("GPS service is enabled");
+  //   } else {
+  //     ("GPS service is disabled.");
+  //   }
+  // }
 
-    if (servicestatus) {
-      ("GPS service is enabled");
-    } else {
-      ("GPS service is disabled.");
-    }
-  }
-
-  void checkLocationPermission() async {
-    LocationPermission permission = await Geolocator.checkPermission();
-
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        ('Location permissions are denied');
-      } else if (permission == LocationPermission.deniedForever) {
-        ("'Location permissions are permanently denied");
-      } else {
-        ("GPS Location service is granted");
-      }
-    } else {
-      ("GPS Location permission granted.");
-    }
-  }
+  // void checkLocationPermission() async {
+  //   LocationPermission permission = await Geolocator.checkPermission();
+  //
+  //   if (permission == LocationPermission.denied) {
+  //     permission = await Geolocator.requestPermission();
+  //     if (permission == LocationPermission.denied) {
+  //       ('Location permissions are denied');
+  //     } else if (permission == LocationPermission.deniedForever) {
+  //       ("'Location permissions are permanently denied");
+  //     } else {
+  //       ("GPS Location service is granted");
+  //     }
+  //   } else {
+  //     ("GPS Location permission granted.");
+  //   }
+  // }
 
   void AddressSheet() {
     showModalBottomSheet(
@@ -635,6 +635,17 @@ class ProfileProvider extends ChangeNotifier {
         title: "Setting"
 
         ),
+    CustomeSettingItemModel(
+        onPressed: () {
+          sl<NavigationService>().navigateTo(rote.setting);
+        },
+        path: CustomSvgAssets(
+          path: IconAssets.email,
+          color: ColorManager.primaryGreen,
+        ),
+        title: "Chat"
+
+    ),
     if (sl<SharedLocal>().getUser()!.token != "")
       CustomeSettingItemModel(
           onPressed: () {
