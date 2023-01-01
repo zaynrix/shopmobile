@@ -16,7 +16,6 @@ import 'package:shopmobile/ui/features/home/homeProvider.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
 void main() async {
-
   var client = StreamChatClient(apiKey);
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +25,8 @@ void main() async {
 
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent, statusBarBrightness: Brightness.dark),
+        statusBarColor: Colors.transparent,
+        statusBarBrightness: Brightness.dark),
   );
   runApp(
     ChangeNotifierProvider<HomeProvider>(
@@ -47,17 +47,10 @@ void main() async {
   );
 }
 
-
-
-
-
-
-
-
-
 ///TODO: Fix chat installation :)
 class MyApp extends StatelessWidget {
   MyApp({required this.streamChatClient});
+
   StreamChatClient streamChatClient;
 
   @override
