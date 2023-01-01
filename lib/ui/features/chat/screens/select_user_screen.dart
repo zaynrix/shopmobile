@@ -53,6 +53,7 @@ class _SelectUserScreenState extends State<SelectUserScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Center(
         child: (_loading)
             ? const CircularProgressIndicator()

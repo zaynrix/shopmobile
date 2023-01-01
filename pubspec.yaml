@@ -23,28 +23,28 @@ dependencies:
   flutter_screenutil: # Responsive Design
   flutter_svg: # Svg Support
   introduction_screen: ^3.0.2
-  intl_phone_number_input: ^0.7.0+2
-  pin_code_fields: ^7.4.0
+  intl_phone_number_input:
+  pin_code_fields:
   badges: ^2.0.3
   path_provider:
-  flutter_secure_storage: ^6.0.0
+  flutter_secure_storage:
   http:
   flutter_slidable:
   shimmer: ^2.0.0
   cached_network_image:
   shared_value:
-  carousel_slider: ^4.1.1
+  carousel_slider:
   image_picker:
   smooth_page_indicator: ^1.0.0+2
-  rxdart: ^0.27.5
+  rxdart:
   dotted_border:
 #  geolocator:
-  url_launcher: ^6.1.5
-  rename: ^2.0.1
-  lottie: ^1.4.2
-  connectivity_plus: ^2.3.7
-  flutter_offline: ^2.1.0
-  jiffy: ^5.0.0
+  url_launcher:
+  rename:
+  lottie:
+  connectivity_plus:
+  flutter_offline:
+  jiffy:
   stream_chat_flutter:
 
 
