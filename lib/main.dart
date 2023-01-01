@@ -46,6 +46,8 @@ void main() async {
     ),
   );
 }
+
+
 ///TODO: Fix chat installation :)
 class MyApp extends StatelessWidget {
   MyApp({required this.streamChatClient});
