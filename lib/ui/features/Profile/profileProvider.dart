@@ -637,7 +637,7 @@ class ProfileProvider extends ChangeNotifier {
         ),
     CustomeSettingItemModel(
         onPressed: () {
-          sl<NavigationService>().navigateTo(rote.setting);
+          sl<NavigationService>().navigateTo(rote.chat);
         },
         path: CustomSvgAssets(
           path: IconAssets.email,

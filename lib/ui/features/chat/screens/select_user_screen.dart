@@ -1,10 +1,10 @@
 import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
 import 'package:flutter/material.dart';
+import '../models/demo_users.dart';
 import '../widgets/widgets.dart';
 import 'home_screen.dart';
 import 'package:shopmobile/ui/features/chat/app.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
-
 class SelectUserScreen extends StatefulWidget {
   static Route get route => MaterialPageRoute(
         builder: (context) => const SelectUserScreen(),

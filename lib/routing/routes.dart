@@ -28,3 +28,4 @@ const String contactus = '/contactus';
 const String terms = '/terms';
 const String helpCenter = '/helpCenter';
 const String pagesEnd = '/pagesEnd';
+const String chat = '/SelectUserScreen';
