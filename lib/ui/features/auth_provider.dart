@@ -225,7 +225,7 @@ class AuthProvider extends ChangeNotifier {
       // sl<NavigationService>().navigateToAndRemove(login);
       // sl<NavigationService>().navigateToAndRemoveFinal();
       //  client.disconnectUser();
-      ch.StreamChatCore.of(sl<NavigationService>().navigatorKey.currentContext!).client;
+      ch.StreamChatCore.of(sl<NavigationService>().navigatorKey.currentContext!).client.disconnectUser();
 
       SchedulerBinding.instance?.addPostFrameCallback((_) async {
         Navigator.of(sl<NavigationService>().navigatorKey.currentContext!)
