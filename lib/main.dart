@@ -35,6 +35,7 @@ void main() async {
           Locale('en'),
           Locale('ar'),
         ],
+
         path: 'assets/translations',
         startLocale: Locale("en"),
         fallbackLocale: const Locale("en"),
@@ -65,6 +66,7 @@ class MyApp extends StatelessWidget {
                 client: streamChatClient,
                 child: ChannelsBloc(child: UsersBloc(child: child!)));
           },
+
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
           locale: context.locale,
