@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     MessagesPage(),
     const NotificationPage(),
     const CallsPage(),
-   const ContactsPage()
+    const ContactsPage()
   ];
 
   final List titles = const ["Messages", "Notification", "Calls", "Contacts"];
@@ -134,20 +134,8 @@ class _BottomNavigationBarState extends State<_BottomNavigationBar> {
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: GlowingActionButton(
                     onPressed: () {
-
                       showDialog(
-
-
-
-
-
-
-
-
-
                         context: context,
-
-
                         builder: (BuildContext context) => const Dialog(
                           child: AspectRatio(
                             aspectRatio: 8 / 7,
