@@ -137,6 +137,8 @@ class _BottomNavigationBarState extends State<_BottomNavigationBar> {
 
                       showDialog(
 
+
+
                         context: context,
                         builder: (BuildContext context) => const Dialog(
                           child: AspectRatio(
