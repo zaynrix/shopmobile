@@ -133,6 +133,7 @@ class _BottomNavigationBarState extends State<_BottomNavigationBar> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: GlowingActionButton(
+
                     onPressed: () {
                       showDialog(
                         context: context,
