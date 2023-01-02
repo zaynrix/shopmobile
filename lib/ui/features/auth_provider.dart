@@ -220,19 +220,31 @@ class AuthProvider extends ChangeNotifier {
     //yahya12345612@gmail.com phone-> 1222222  pas -> yahya12345612     5
     //yahya12345612 123456
     // final client =
+    await    ch.StreamChatCore.of(sl<NavigationService>().navigatorKey.currentContext!).client.disconnectUser();
+        ch.StreamChatCore.of(sl<NavigationService>().navigatorKey.currentContext!).client.dispose();
+
+    // final userId = ch.StreamChatCore.of(sl<NavigationService>().navigatorKey.currentContext!).deactivate();
+    // final otherMember = members?.firstWhereOrNull(
+
+    //       (element) => element.userId != userId,
+    // );
+    // print("This status $userId");
     if (res.status == true) {
+
       sl<Storage>().secureStorage.delete(key: SharedPrefsConstant.TOKEN);
       // sl<NavigationService>().navigateToAndRemove(login);
       // sl<NavigationService>().navigateToAndRemoveFinal();
       //  client.disconnectUser();
-      ch.StreamChatCore.of(sl<NavigationService>().navigatorKey.currentContext!).client.disconnectUser();
+      // await StreamChatCore.of(context).client.disconnectUser();
+      print("${ch.StreamChatCore.of(sl<NavigationService>().navigatorKey.currentContext!).client.disconnectUser()}");
+      await    ch.StreamChatCore.of(sl<NavigationService>().navigatorKey.currentContext!).client.disconnectUser();
+      sl<ProfileProvider>().clearUserData();
 
       SchedulerBinding.instance?.addPostFrameCallback((_) async {
         Navigator.of(sl<NavigationService>().navigatorKey.currentContext!)
             .pushNamedAndRemoveUntil(login, (Route<dynamic> route) => false);
       });
 
-      sl<ProfileProvider>().clearUserData();
 
       AppConfig.showSnakBar("${res.message}");
     } else {

@@ -8,6 +8,7 @@ import 'package:shopmobile/routing/routes.dart';
 import 'package:shopmobile/utils/storage.dart';
 import 'package:path_provider/path_provider.dart';
 import '../routing/navigation.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart' as ch;
 
 class AppConfig extends ChangeNotifier {
   Future<Timer> loadData() async {
@@ -16,11 +17,12 @@ class AppConfig extends ChangeNotifier {
 
 
   int? checkInt(dynamic value) {
-    if(value is int) return value;
-    if(value is double) return value.toInt();
-    if(value is String) return int.tryParse(value);
+    if (value is int) return value;
+    if (value is double) return value.toInt();
+    if (value is String) return int.tryParse(value);
     return null;
   }
+
   Future<void> deleteCacheDir() async {
     Directory tempDir = await getTemporaryDirectory();
 
@@ -41,9 +43,12 @@ class AppConfig extends ChangeNotifier {
   // List<Sub> searchList = [];
 
 
+  onDoneLoading() async {
+    final cleint = ch.StreamChatCore.of(
+        sl<NavigationService>().navigatorKey.currentContext!)
+        .client;
 
-  onDoneLoading() async{
-    var token= await sl<Storage>()
+    var token = await sl<Storage>()
         .secureStorage
         .read(key: SharedPrefsConstant.TOKEN);
     var shared = sl<SharedLocal>();
@@ -52,9 +57,21 @@ class AppConfig extends ChangeNotifier {
 
     if (shared.firstIntro) {
       print("This is Token $token");
-      token != null
-          ? sl<NavigationService>().navigateToAndRemove(home)
-          : sl<NavigationService>().navigateToAndRemove(login);
+      if (token != null) {
+        await cleint.connectUser(
+          ch.User(
+            id: shared.getUser()!.id.toString(),
+            extraData: {
+              'name': shared.getUser()!.name,
+              'image': shared.getUser()!.image,
+            },
+          ),
+          cleint.devToken("${shared.getUser()!.id}").rawValue,
+        );
+        sl<NavigationService>().navigateToAndRemove(home);
+      } else {
+        sl<NavigationService>().navigateToAndRemove(login);
+      }
     } else {
       sl<SharedLocal>().firstIntro = true;
       sl<NavigationService>().navigateToAndRemove(intro);
@@ -70,7 +87,9 @@ class AppConfig extends ChangeNotifier {
   }
 
   TextTheme getTextContext(BuildContext context) {
-    return Theme.of(context).textTheme;
+    return Theme
+        .of(context)
+        .textTheme;
   }
 
   static showSnakBar(String content) {
