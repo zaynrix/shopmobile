@@ -26,8 +26,6 @@ class ChatScreen extends StatefulWidget {
   State<ChatScreen> createState() => _ChatScreenState();
 }
 
-
-
 class _ChatScreenState extends State<ChatScreen> {
   late StreamSubscription<int> unreadCountSubscription;
 
@@ -41,8 +39,6 @@ class _ChatScreenState extends State<ChatScreen> {
         .listen(_unreadCountHandler);
   }
 
-
-
   Future<void> _unreadCountHandler(int count) async {
     if (count > 0) {
       await StreamChannel.of(context).channel.markRead();
@@ -54,9 +50,6 @@ class _ChatScreenState extends State<ChatScreen> {
     unreadCountSubscription.cancel();
     super.dispose();
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +91,6 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
         ],
       ),
-
       body: Column(
         children: [
           Expanded(
@@ -119,8 +111,6 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 }
-
-
 
 class _MessageList extends StatelessWidget {
   const _MessageList({
