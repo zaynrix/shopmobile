@@ -145,6 +145,7 @@ class _BottomNavigationBarState extends State<_BottomNavigationBar> {
                         ),
                       );
                     },
+
                     icon: CupertinoIcons.add,
                     color: AppColors.secondary,
                   ),
