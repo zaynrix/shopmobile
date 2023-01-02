@@ -47,13 +47,13 @@ class _HomeScreenState extends State<HomeScreen> {
           builder: (context, String value, child) => Text(value),
         ),
         leadingWidth: 54,
-        leading: Align(
-          alignment: Alignment.centerRight,
-          child: IconBackground(
-            icon: Icons.search,
-            onTap: () {},
-          ),
-        ),
+        // leading: Align(
+        //   alignment: Alignment.centerRight,
+        //   child: IconBackground(
+        //     icon: Icons.search,
+        //     onTap: () {},
+        //   ),
+        // ),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 24),

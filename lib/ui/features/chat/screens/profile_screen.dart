@@ -31,50 +31,50 @@ class ProfileScreen extends StatelessWidget {
               child: Text(user?.name ?? 'No name'),
             ),
             const Divider(),
-            const _SignOutButton(),
+            // const _SignOutButton(),
           ],
         ),
       ),
     );
   }
 }
-
-class _SignOutButton extends StatefulWidget {
-  const _SignOutButton({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  __SignOutButtonState createState() => __SignOutButtonState();
-}
-
-class __SignOutButtonState extends State<_SignOutButton> {
-  bool _loading = false;
-
-  Future<void> _signOut() async {
-    setState(() {
-      _loading = true;
-    });
-
-    try {
-      await StreamChatCore.of(context).client.disconnectUser();
-
-      Navigator.of(context).push(SelectUserScreen.route);
-    } on Exception catch (e, st) {
-      logger.e('Could not sign out', e, st);
-      setState(() {
-        _loading = false;
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return _loading
-        ? const CircularProgressIndicator()
-        : TextButton(
-      onPressed: _signOut,
-      child: const Text('Sign out'),
-    );
-  }
-}
+//123123123 gmail.com
+// class _SignOutButton extends StatefulWidget {
+//   const _SignOutButton({
+//     Key? key,
+//   }) : super(key: key);
+//
+//   @override
+//   __SignOutButtonState createState() => __SignOutButtonState();
+// }
+//
+// class __SignOutButtonState extends State<_SignOutButton> {
+//   bool _loading = false;
+//
+//   // Future<void> _signOut() async {
+//   //   setState(() {
+//   //     _loading = true;
+//   //   });
+//   //
+//   //   try {
+//   //     await StreamChatCore.of(context).client.disconnectUser();
+//   //
+//   //     Navigator.of(context).push(SelectUserScreen.route);
+//   //   } on Exception catch (e, st) {
+//   //     logger.e('Could not sign out', e, st);
+//   //     setState(() {
+//   //       _loading = false;
+//   //     });
+//   //   }
+//   // }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return _loading
+//         ? const CircularProgressIndicator()
+//         : TextButton(
+//       onPressed: _signOut,
+//       child: const Text('Sign out'),
+//     );
+//   }
+// }

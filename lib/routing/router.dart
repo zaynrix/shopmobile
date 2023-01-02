@@ -39,6 +39,7 @@ import 'package:shopmobile/ui/features/registration/signUpScreen.dart';
 import 'package:shopmobile/ui/features/registration/splashScreen.dart';
 import 'package:shopmobile/utils/appConfig.dart';
 import 'package:provider/provider.dart';
+import '../ui/features/chat/screens/home_screen.dart';
 import '../ui/features/chat/screens/select_user_screen.dart';
 import 'routes.dart';
 
@@ -126,7 +127,7 @@ class RouterX {
         );
       case chat:
         return MaterialPageRoute(
-          builder: (context) =>  SelectUserScreen(),
+          builder: (context) =>  HomeScreen(),
         );
 
       case createNewPassword:

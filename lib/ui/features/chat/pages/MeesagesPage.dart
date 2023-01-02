@@ -42,9 +42,9 @@ class _MessagesPageState extends State<MessagesPage> {
               height: 100, width: 100, child: CircularProgressIndicator())),
       listBuilder: (p0, channel) => CustomScrollView(
         slivers: [
-          const SliverToBoxAdapter(
-            child: _Stories(),
-          ),
+          // const SliverToBoxAdapter(
+          //   child: _Stories(),
+          // ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
                 (context, index) => _MessageTitle(
@@ -241,56 +241,56 @@ class _MessageTitle extends StatelessWidget {
   }
 }
 
-class _Stories extends StatelessWidget {
-  const _Stories({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Card(
-        elevation: 0,
-        child: SizedBox(
-          height: 140,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 16.0, top: 8, bottom: 16),
-                child: Text(
-                  'Stories',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 15,
-                    color: AppColors.textFaded,
-                  ),
-                ),
-              ),
-              // Expanded(
-              //   child: ListView.builder(
-              //     scrollDirection: Axis.horizontal,
-              //     itemBuilder: (context, index) {
-              //       var faker = Faker();
-              //       return SizedBox(
-              //           width: 60,
-              //           child: _StoryCard(
-              //               storyData: StoryData(
-              //             name: faker.person.firstName(),
-              //             url: Helpers.randomPictureUrl(),
-              //           )));
-              //     },
-              //   ),
-              // )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
+// class _Stories extends StatelessWidget {
+//   const _Stories({
+//     Key? key,
+//   }) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.symmetric(vertical: 8.0),
+//       child: Card(
+//         elevation: 0,
+//         child: SizedBox(
+//           height: 140,
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             mainAxisSize: MainAxisSize.min,
+//             children: [
+//               const Padding(
+//                 padding: EdgeInsets.only(left: 16.0, top: 8, bottom: 16),
+//                 child: Text(
+//                   'Stories',
+//                   style: TextStyle(
+//                     fontWeight: FontWeight.w900,
+//                     fontSize: 15,
+//                     color: AppColors.textFaded,
+//                   ),
+//                 ),
+//               ),
+//               // Expanded(
+//               //   child: ListView.builder(
+//               //     scrollDirection: Axis.horizontal,
+//               //     itemBuilder: (context, index) {
+//               //       var faker = Faker();
+//               //       return SizedBox(
+//               //           width: 60,
+//               //           child: _StoryCard(
+//               //               storyData: StoryData(
+//               //             name: faker.person.firstName(),
+//               //             url: Helpers.randomPictureUrl(),
+//               //           )));
+//               //     },
+//               //   ),
+//               // )
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 // class _StoryCard extends StatelessWidget {
 //   const _StoryCard({

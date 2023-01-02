@@ -10,6 +10,7 @@ import 'package:shopmobile/routing/routes.dart';
 import 'package:shopmobile/ui/features/Profile/profileProvider.dart';
 import 'package:shopmobile/utils/appConfig.dart';
 import 'package:shopmobile/utils/storage.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart' as ch;
 
 class AuthProvider extends ChangeNotifier {
   //Login / Signup Controller
@@ -54,6 +55,9 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> loginProvider() async {
+    final cleint = ch.StreamChatCore.of(
+        sl<NavigationService>().navigatorKey.currentContext!)
+        .client;
     if (formKey.currentState!.validate()) {
       // Start Loading
       loading = true;
@@ -64,14 +68,22 @@ class AuthProvider extends ChangeNotifier {
       //("This is $res");
 
       if (res.status == true && res.user != null) {
-
         // Stop Loading
         loading = false;
         notifyListeners();
 
         // Save User Information
         sl<SharedLocal>().setUser(res.user!);
-
+        await cleint.connectUser(
+            ch.User(
+              id: res.user!.id.toString(),
+              extraData: {
+                'name': res.user!.name,
+                'image': res.user!.image,
+              },
+            ),
+            cleint.devToken("${res.user!.id}").rawValue,
+        );
         // Save Token
         sl<Storage>()
             .secureStorage
@@ -91,13 +103,13 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> SignupProvider() async {
-    //(fullname.text);
     User user = User.SignUp(
         name: fullname.text,
         introPhone: selectedLocation,
         phone: phone.text,
         email: emailController.text,
         password: passwordController.text);
+
     if (formKey.currentState!.validate()) {
       loading = true;
       notifyListeners();
@@ -107,15 +119,18 @@ class AuthProvider extends ChangeNotifier {
         loading = false;
         notifyListeners();
 
-        AppConfig.showSnakBar("${res.message??"Account was created Successfully!!"}");
+        AppConfig.showSnakBar(
+            "${res.message ?? "Account was created Successfully!!"}");
+
         sl<NavigationService>().navigateToAndRemove(login);
       } else {
         loading = false;
         notifyListeners();
-        AppConfig.showSnakBar("${res.message??"Something Wrong, Try again"}");
+        AppConfig.showSnakBar("${res.message ?? "Something Wrong, Try again"}");
       }
     }
   }
+
 //0599023189
   Future<void> otpProvider() async {
     if (formKey.currentState!.validate()) {
@@ -200,19 +215,21 @@ class AuthProvider extends ChangeNotifier {
     LogoutModel res = await sl<HttpAuth>().logout();
 
     // //("This is $res");
+
     //yahya123456@gmail.com 123456    6
     //yahya12345612@gmail.com phone-> 1222222  pas -> yahya12345612     5
     //yahya12345612 123456
-
+    // final client =
     if (res.status == true) {
       sl<Storage>().secureStorage.delete(key: SharedPrefsConstant.TOKEN);
       // sl<NavigationService>().navigateToAndRemove(login);
       // sl<NavigationService>().navigateToAndRemoveFinal();
+      //  client.disconnectUser();
+      ch.StreamChatCore.of(sl<NavigationService>().navigatorKey.currentContext!).client;
 
       SchedulerBinding.instance?.addPostFrameCallback((_) async {
-        Navigator.of(sl<NavigationService>().navigatorKey.currentContext!).pushNamedAndRemoveUntil(
-            login,
-                (Route<dynamic> route) => false);
+        Navigator.of(sl<NavigationService>().navigatorKey.currentContext!)
+            .pushNamedAndRemoveUntil(login, (Route<dynamic> route) => false);
       });
 
       sl<ProfileProvider>().clearUserData();
