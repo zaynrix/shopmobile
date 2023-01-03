@@ -26,7 +26,7 @@ abstract class _DarkColors {
 }
 
 /// Reference to the application theme.
-class AppTheme {w
+class AppTheme {
   static const accentColor = AppColors.accent;
   static final visualDensity = VisualDensity.adaptivePlatformDensity;
 
