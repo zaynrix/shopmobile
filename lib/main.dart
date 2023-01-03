@@ -1,5 +1,5 @@
 // ignore_for_file: deprecated_member_use
-
+import 'package:shopmobile/ui/features/chat/theme.dart';
 import 'package:shopmobile/di.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,6 +11,7 @@ import 'package:shopmobile/resources/theme_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shopmobile/ui/features/chat/app.dart';
+import 'package:shopmobile/ui/features/chat/theme.dart';
 import 'package:shopmobile/ui/features/home/homeProvider.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
@@ -73,6 +74,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Mobile Shop',
           theme: getApplicationTheme(),
+          darkTheme: AppTheme().darkBase,
           navigatorKey: sl<NavigationService>().navigatorKey,
           initialRoute: splash,
           onGenerateRoute: RouterX.generateRoute,
