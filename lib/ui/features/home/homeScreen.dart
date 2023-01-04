@@ -39,6 +39,7 @@ class Home extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: Column(
                 children: [
+
                   Container(
                     child: CarouselSlider(
                       options: CarouselOptions(
